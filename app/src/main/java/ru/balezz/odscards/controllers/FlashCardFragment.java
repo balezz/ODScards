@@ -34,9 +34,6 @@ public class FlashCardFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_flashcard, container, false);
 
-        final Animation animationRotate = AnimationUtils.
-                loadAnimation(getActivity(), R.anim.rotate_center);
-
         mCardFace = (MaterialCardView) v.findViewById(R.id.card_face);
         mCardBack = (MaterialCardView) v.findViewById(R.id.card_back);
         mCardBack.setVisibility(View.GONE);
