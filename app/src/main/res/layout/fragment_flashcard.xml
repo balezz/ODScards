@@ -19,7 +19,7 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:id="@+id/mcview"
+        android:id="@+id/card_face"
         android:layout_height="256dp"
         android:layout_marginLeft="24dp"
         android:layout_marginTop="96dp"
@@ -36,8 +36,27 @@
             android:gravity="center"
             android:text="@string/quest_example"
             />
+    </com.google.android.material.card.MaterialCardView>
 
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:id="@+id/card_back"
+        android:layout_height="256dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginRight="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardBackgroundColor="@color/light_card_background"
+        app:cardCornerRadius="4dp">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/answer_example"
+            />
     </com.google.android.material.card.MaterialCardView>
 
     <ImageButton
@@ -49,7 +68,8 @@
         android:layout_marginBottom="24dp"
         android:background="@drawable/btn_normal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/forward"/>
 
     <ImageButton
         android:id="@+id/btn_back"

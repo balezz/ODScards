@@ -1,4 +1,4 @@
-package ru.balezz.odscards;
+package ru.balezz.odscards.controllers;
 
 import android.content.Intent;
 import android.os.Build;
@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import ru.balezz.odscards.LecturePageActivity;
+import ru.balezz.odscards.R;
 import ru.balezz.odscards.models.Lecture;
 import ru.balezz.odscards.models.LectureLab;
 
@@ -92,7 +94,7 @@ public class LectureListFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
-    static LectureListFragment newInstance() {
+    public static LectureListFragment newInstance() {
         return new LectureListFragment();
     }
 

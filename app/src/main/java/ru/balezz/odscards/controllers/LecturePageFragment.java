@@ -1,4 +1,4 @@
-package ru.balezz.odscards;
+package ru.balezz.odscards.controllers;
 
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.webkit.WebViewClient;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import ru.balezz.odscards.R;
 
 public class LecturePageFragment extends Fragment {
     private static final String ARG_URI = "lecture_page_uri";

@@ -7,6 +7,8 @@ import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 
+import ru.balezz.odscards.controllers.LecturePageFragment;
+
 public class LecturePageActivity extends SingleFragmentActivity {
 
     private static final String TAG = "LecturePageActivity";

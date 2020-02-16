@@ -1,4 +1,4 @@
-package ru.balezz.odscards;
+package ru.balezz.odscards.controllers;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import ru.balezz.odscards.FlashCardActivity;
+import ru.balezz.odscards.LectureListActivity;
+import ru.balezz.odscards.R;
+
 public class MainFragment extends Fragment {
     ImageView mLectureImageView;
     ImageView mFlashCardImageView;
 
-    static MainFragment getInstance() {
+    public static MainFragment getInstance() {
         return new MainFragment();
     }
 

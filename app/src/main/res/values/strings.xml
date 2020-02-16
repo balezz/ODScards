@@ -13,5 +13,7 @@
     <string name="i_know_it">Запомнил</string>
     <string name="quest_example">Data science about data</string>
     <string name="back">back</string>
+    <string name="forward">forward</string>
+    <string name="answer_example">Yeh, it about data</string>
 
 </resources>
