@@ -11,5 +11,7 @@
     <string name="item_title_4">Экзамен</string>
     <string name="lecture_stub">Лекция №1. Введение в Pandas</string>
     <string name="i_know_it">Запомнил</string>
+    <string name="quest_example">Data science about data</string>
+    <string name="back">back</string>
 
 </resources>
