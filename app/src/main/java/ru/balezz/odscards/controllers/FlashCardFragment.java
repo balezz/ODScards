@@ -6,8 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.RotateAnimation;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,8 +21,8 @@ public class FlashCardFragment extends Fragment {
     public static FlashCardFragment newInstance() {
         return new FlashCardFragment();
     }
-    MaterialCardView mCardFace;
-    MaterialCardView mCardBack;
+    MaterialCardView mCardView;
+    TextView mCardText;
     boolean mCardFaceVisible = true;
 
 
@@ -34,41 +33,44 @@ public class FlashCardFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_flashcard, container, false);
 
-        mCardFace = (MaterialCardView) v.findViewById(R.id.card_face);
-        mCardBack = (MaterialCardView) v.findViewById(R.id.card_back);
-        mCardBack.setVisibility(View.GONE);
+        mCardView = (MaterialCardView) v.findViewById(R.id.card_face);
+        mCardText = (TextView) v.findViewById(R.id.card_text);
 
-        mCardFace.setOnClickListener(new View.OnClickListener() {
+        mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    mCardFaceVisible = false;
-                    applyRotation(mCardFace);
-                    mCardFace.setVisibility(View.GONE);
-                    mCardBack.setVisibility(View.VISIBLE);
-            }
-        });
-
-        mCardBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCardFaceVisible = true;
-                applyRotation(mCardBack);
-                mCardFace.setVisibility(View.VISIBLE);
-                mCardBack.setVisibility(View.GONE);
+                    mCardFaceVisible = !mCardFaceVisible;
+                    applyRotation();
             }
         });
 
         return v;
     }
 
-    private void applyRotation(MaterialCardView cardView) {
-        final float centerX = cardView.getWidth() / 2.0f;
-        final float centerY = cardView.getHeight() / 2.0f;
 
+    private void applyRotation(){
         final Rotate3dAnimation rotation = new Rotate3dAnimation(0, 0,
                 0, 180, 0, 0);
         rotation.setDuration(500);
+        rotation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                if (mCardFaceVisible)
+                    mCardText.setText(R.string.quest_example);
+                else
+                    mCardText.setText(R.string.answer_example);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+            }
+
+        });
         rotation.setInterpolator(new AccelerateInterpolator());
-        cardView.startAnimation(rotation);
+        mCardView.startAnimation(rotation);
     }
 }

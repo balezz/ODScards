@@ -11,9 +11,11 @@
     <string name="item_title_4">Экзамен</string>
     <string name="lecture_stub">Лекция №1. Введение в Pandas</string>
     <string name="i_know_it">Запомнил</string>
-    <string name="quest_example">Data science about data</string>
+    <string name="quest_example">Data science - наука о данных </string>
     <string name="back">back</string>
     <string name="forward">forward</string>
-    <string name="answer_example">Yeh, it about data</string>
+    <string name="answer_example">Верно, предмет науки - данные и методы их обработки</string>
+    <string name="rotate_face">Нажмите чтобы перевернуть карту</string>
+    <string name="rotate_back">Нажмите для просмотра вопроса</string>
 
 </resources>
