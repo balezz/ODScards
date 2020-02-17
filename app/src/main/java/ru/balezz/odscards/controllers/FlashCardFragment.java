@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Switch;
 import android.widget.TextView;
 
@@ -32,6 +33,7 @@ public class FlashCardFragment extends Fragment {
     ImageButton mForwardButton;
     ImageButton mBackwardButton;
     Switch mSwitchKnown;
+    ProgressBar mProgressBar;
 
     List<FlashCard> mFlashCards;
     FlashCard mFlashCard;
@@ -92,6 +94,9 @@ public class FlashCardFragment extends Fragment {
             }
         });
 
+        mProgressBar = (ProgressBar) v.findViewById(R.id.progressBar);
+        mProgressBar.setMax(mFlashCards.size() - 1);
+        mProgressBar.setProgress(mFlashId);
 
         return v;
     }
@@ -100,6 +105,7 @@ public class FlashCardFragment extends Fragment {
         mCardFaceVisible = true;
         mCardText.setText(mFlashCard.getQuestion());
         mSwitchKnown.setChecked(mFlashCard.isKnown());
+        mProgressBar.setProgress(mFlashId);
     }
 
     private void applyRotation(){
