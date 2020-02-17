@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.widget.ImageButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,7 @@ public class FlashCardFragment extends Fragment {
     TextView mCardText;
     ImageButton mForwardButton;
     ImageButton mBackwardButton;
+    Switch mSwitchKnown;
 
     List<FlashCard> mFlashCards;
     FlashCard mFlashCard;
@@ -81,6 +83,15 @@ public class FlashCardFragment extends Fragment {
             }
         });
 
+        mSwitchKnown = (Switch) v.findViewById(R.id.switchKnown);
+        mSwitchKnown.setChecked(mFlashCard.isKnown());
+        mSwitchKnown.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mFlashCard.setKnown(mSwitchKnown.isChecked());
+            }
+        });
+
 
         return v;
     }
@@ -88,6 +99,7 @@ public class FlashCardFragment extends Fragment {
     private void updateUI() {
         mCardFaceVisible = true;
         mCardText.setText(mFlashCard.getQuestion());
+        mSwitchKnown.setChecked(mFlashCard.isKnown());
     }
 
     private void applyRotation(){

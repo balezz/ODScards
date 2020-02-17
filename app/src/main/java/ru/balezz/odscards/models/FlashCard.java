@@ -5,6 +5,7 @@ public class FlashCard {
     int id;
     String mQuestion;
     String mAnswer;
+    boolean mKnown;
 
     FlashCard() {
         this.id = counter++;
@@ -30,5 +31,11 @@ public class FlashCard {
         return mAnswer;
     }
 
+    public boolean isKnown() {
+        return mKnown;
+    }
 
+    public void setKnown(boolean known) {
+        mKnown = known;
+    }
 }
