@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,7 +15,11 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.card.MaterialCardView;
 
+import java.util.List;
+
 import ru.balezz.odscards.R;
+import ru.balezz.odscards.models.FlashCard;
+import ru.balezz.odscards.models.FlashCardLab;
 import ru.balezz.odscards.utils.Rotate3dAnimation;
 
 public class FlashCardFragment extends Fragment {
@@ -23,8 +28,20 @@ public class FlashCardFragment extends Fragment {
     }
     MaterialCardView mCardView;
     TextView mCardText;
+    ImageButton mForwardButton;
+    ImageButton mBackwardButton;
+
+    List<FlashCard> mFlashCards;
+    FlashCard mFlashCard;
+    int mFlashId = 0;
     boolean mCardFaceVisible = true;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mFlashCards = FlashCardLab.getInstance().getFlashCards();
+        mFlashCard = mFlashCards.get(mFlashId);
+    }
 
     @Nullable
     @Override
@@ -35,7 +52,6 @@ public class FlashCardFragment extends Fragment {
 
         mCardView = (MaterialCardView) v.findViewById(R.id.card_face);
         mCardText = (TextView) v.findViewById(R.id.card_text);
-
         mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,9 +60,35 @@ public class FlashCardFragment extends Fragment {
             }
         });
 
+        mForwardButton = (ImageButton) v.findViewById(R.id.btn_forward);
+        mBackwardButton = (ImageButton) v.findViewById(R.id.btn_back);
+        mForwardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mFlashId < mFlashCards.size() - 1) {
+                    mFlashCard = mFlashCards.get(++mFlashId);
+                    updateUI();
+                }
+            }
+        });
+        mBackwardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mFlashId > 0) {
+                    mFlashCard = mFlashCards.get(--mFlashId);
+                    updateUI();
+                }
+            }
+        });
+
+
         return v;
     }
 
+    private void updateUI() {
+        mCardFaceVisible = true;
+        mCardText.setText(mFlashCard.getQuestion());
+    }
 
     private void applyRotation(){
         final Rotate3dAnimation rotation = new Rotate3dAnimation(0, 0,
@@ -60,9 +102,9 @@ public class FlashCardFragment extends Fragment {
             @Override
             public void onAnimationEnd(Animation animation) {
                 if (mCardFaceVisible)
-                    mCardText.setText(R.string.quest_example);
+                    mCardText.setText(mFlashCard.getQuestion());
                 else
-                    mCardText.setText(R.string.answer_example);
+                    mCardText.setText(mFlashCard.getAnswer());
             }
 
             @Override
