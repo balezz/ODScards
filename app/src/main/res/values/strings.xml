@@ -17,5 +17,7 @@
     <string name="answer_example">Верно, предмет науки - данные и методы их обработки</string>
     <string name="rotate_face">Нажмите чтобы перевернуть карту</string>
     <string name="rotate_back">Нажмите для просмотра вопроса</string>
+    <string name="quest_counter">Вопрос: 1/25</string>
+    <string name="quest_stat">Статистика: 5/5</string>
 
 </resources>
