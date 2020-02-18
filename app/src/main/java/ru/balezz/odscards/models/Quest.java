@@ -7,13 +7,19 @@ enum AnswerType {
 public class Quest {
     String mQuestion;
     String [] mAnswers;
-    int mRightAnswerIndex;
+    int mChoiceCount;
+    boolean[] mRightAnswers;
     AnswerType mType;
 
-    public Quest(AnswerType type, int answerVariants, int rightAnswer) {
+    public Quest(AnswerType type, int choiceCount, boolean[] rightAnswer) {
         mType = type;
-        mAnswers = new String[answerVariants];
-        mRightAnswerIndex = rightAnswer;
+        mChoiceCount = choiceCount;
+        mAnswers = new String[choiceCount];
+        mRightAnswers = rightAnswer;
+    }
+
+    public int getChoiceCount() {
+        return mChoiceCount;
     }
 
     public String getQuestion() {

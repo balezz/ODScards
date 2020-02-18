@@ -12,7 +12,7 @@ public class QuestLab {
     }
 
     private QuestLab() {
-        Quest quest = new Quest(AnswerType.Radio, 4, 1);
+        Quest quest = new Quest(AnswerType.Radio, 4, new boolean[]{true, false, false, false});
         quest.setQuestion("Data Science - это ... ");
         quest.setAnswers(new String[]{"Наука о программах.", "Наука о данных.", "Наука о науке.",
         "Лженаука."});

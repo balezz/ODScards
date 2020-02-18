@@ -1,6 +1,7 @@
 package ru.balezz.odscards.controllers;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ import ru.balezz.odscards.models.Quest;
 import ru.balezz.odscards.models.QuestLab;
 
 public class QuestFragment extends Fragment {
-
+    private static final String TAG = "QuestFragment";
 
     private Quest mQuest;
 
@@ -35,14 +36,19 @@ public class QuestFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+
         View v = inflater.inflate(R.layout.fragment_quest, container, false);
         LinearLayout questLayout = (LinearLayout) v.findViewById(R.id.quest_layout);
 
         questLayout.addView(getQuestion());
-        questLayout.addView(getChoice(0));
-        questLayout.addView(getChoice(1));
-        questLayout.addView(getChoice(2));
+        int choiceCount = mQuest.getChoiceCount();
+        Log.i(TAG, "onCreateView: choiceCount = " + choiceCount);
+        for (int i = 0; i < choiceCount; i++) {
+            questLayout.addView(getChoice(i));
+        }
         return v;
     }
 
