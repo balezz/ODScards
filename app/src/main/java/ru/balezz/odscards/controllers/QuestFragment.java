@@ -1,11 +1,11 @@
 package ru.balezz.odscards.controllers;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import java.util.List;
+
 import ru.balezz.odscards.R;
 import ru.balezz.odscards.models.Quest;
 import ru.balezz.odscards.models.QuestLab;
@@ -22,7 +24,12 @@ import ru.balezz.odscards.models.QuestLab;
 public class QuestFragment extends Fragment {
     private static final String TAG = "QuestFragment";
 
+    private ImageButton mForwardButton;
+    private ImageButton mBackwardButton;
+    private LinearLayout mQuestLayout;
+    private List<Quest> mQuests;
     private Quest mQuest;
+    private int mQuestId;
 
     public static QuestFragment newInstance() {
         return new QuestFragment();
@@ -31,7 +38,9 @@ public class QuestFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mQuest = QuestLab.getInstance().getQuests().get(0);
+        mQuests = QuestLab.getInstance().getQuests();
+        mQuestId = 0;
+        mQuest = mQuests.get(mQuestId);
     }
 
     @Nullable
@@ -41,18 +50,42 @@ public class QuestFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_quest, container, false);
-        LinearLayout questLayout = (LinearLayout) v.findViewById(R.id.quest_layout);
+        mQuestLayout = (LinearLayout) v.findViewById(R.id.quest_layout);
+        mForwardButton = (ImageButton) v.findViewById(R.id.btn_forward);
+        mBackwardButton = (ImageButton) v.findViewById(R.id.btn_back);
 
-        questLayout.addView(getQuestion());
-        int choiceCount = mQuest.getChoiceCount();
-        Log.i(TAG, "onCreateView: choiceCount = " + choiceCount);
-        for (int i = 0; i < choiceCount; i++) {
-            questLayout.addView(getChoice(i));
-        }
+        mForwardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mQuestId < mQuests.size() - 1) {
+                    mQuest = mQuests.get(++mQuestId);
+                    updateUI();
+                }
+            }
+        });
+        mBackwardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mQuestId > 0) {
+                    mQuest = mQuests.get(--mQuestId);
+                    updateUI();
+                }
+            }
+        });
+        updateUI();
+
         return v;
     }
 
-    TextView getQuestion() {
+    private void updateUI() {
+        mQuestLayout.removeAllViews();
+        mQuestLayout.addView(getQuestionView());
+        for (String choice : mQuest.getChoices()) {
+            mQuestLayout.addView(getChoiceView(choice));
+        }
+    }
+
+    private TextView getQuestionView() {
         TextView textView = new TextView(getActivity());
         textView.setText(mQuest.getQuestion());
         LayoutParams textViewParams = new LayoutParams(
@@ -61,16 +94,14 @@ public class QuestFragment extends Fragment {
         return textView;
     }
 
-    LinearLayout getChoice(int index) {
-        LinearLayout layout = new LinearLayout(getActivity());
-        layout.setOrientation(LinearLayout.HORIZONTAL);
+    private LinearLayout getChoiceView(String choice) {
+        LinearLayout choiceLayout = new LinearLayout(getActivity());
+        choiceLayout.setOrientation(LinearLayout.HORIZONTAL);
         CheckBox checkBox = new CheckBox(getActivity());
-        layout.addView(checkBox);
+        choiceLayout.addView(checkBox);
         TextView textAnswer = new TextView(getActivity());
-        textAnswer.setText(mQuest.getAnswers()[index]);
-        layout.addView(textAnswer);
-
-
-        return layout;
+        textAnswer.setText(choice);
+        choiceLayout.addView(textAnswer);
+        return choiceLayout;
     }
 }

@@ -8,36 +8,35 @@ enum AnswerType {
 }
 
 public class Quest {
-    String mQuestion;
-    List<String> mAnswers;
-    int mChoiceCount;
-    boolean[] mRightAnswers;
-    AnswerType mType;
+    private static int counter;
+    private int id;
+    private String mQuestion;
+    private List<String> mChoices;
+    private int mChoiceCount;
+    private boolean[] mRightAnswers;
+    private AnswerType mType;
 
-    public Quest(AnswerType type, int choiceCount, boolean[] rightAnswer) {
+    Quest(AnswerType type, int choiceCount, boolean[] rightAnswer) {
+        id = counter++;
         mType = type;
         mChoiceCount = choiceCount;
-        mAnswers = new ArrayList<>();
+        mChoices = new ArrayList<>();
         mRightAnswers = rightAnswer;
-    }
-
-    public int getChoiceCount() {
-        return mChoiceCount;
     }
 
     public String getQuestion() {
         return mQuestion;
     }
 
-    public void setQuestion(String question) {
+    public List<String> getChoices() {
+        return mChoices;
+    }
+
+    void setQuestion(String question) {
         mQuestion = question;
     }
 
-    public List<String> getAnswers() {
-        return mAnswers;
-    }
-
-    public void setChoice(String choice) {
-        mAnswers.add(choice);
+    void setChoice(String choice) {
+        mChoices.add(choice);
     }
 }
