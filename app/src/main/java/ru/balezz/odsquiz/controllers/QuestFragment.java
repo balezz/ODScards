@@ -1,11 +1,10 @@
-package ru.balezz.odscards.controllers;
+package ru.balezz.odsquiz.controllers;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
@@ -20,10 +19,10 @@ import androidx.fragment.app.Fragment;
 
 import java.util.List;
 
-import ru.balezz.odscards.R;
-import ru.balezz.odscards.models.AnswerType;
-import ru.balezz.odscards.models.Quest;
-import ru.balezz.odscards.models.QuestLab;
+import ru.balezz.odsquiz.R;
+import ru.balezz.odsquiz.models.AnswerType;
+import ru.balezz.odsquiz.models.Quest;
+import ru.balezz.odsquiz.models.QuestLab;
 
 public class QuestFragment extends Fragment {
     private static final String TAG = "QuestFragment";
@@ -34,7 +33,7 @@ public class QuestFragment extends Fragment {
     private List<Quest> mQuests;
     private Quest mQuest;
     private int mQuestId;
-    private boolean[] mUserAnswers;
+    private boolean[] mUserChecks;
 
     public static QuestFragment newInstance() {
         return new QuestFragment();
@@ -46,6 +45,7 @@ public class QuestFragment extends Fragment {
         mQuests = QuestLab.getInstance().getQuests();
         mQuestId = 0;
         mQuest = mQuests.get(mQuestId);
+        mUserChecks = new boolean[mQuests.size() - 1];
     }
 
     @Nullable
@@ -115,12 +115,17 @@ public class QuestFragment extends Fragment {
             radioButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mQuest.setSingleUserCheck(index);
+                    setSingleUserCheck(index);
                 }
             });
             radioGroup.addView(radioButton);
         }
         return radioGroup;
+    }
+
+    private void setSingleUserCheck(int index) {
+        mUserChecks = new boolean[mQuests.size() - 1];
+        mUserChecks[index] = true;
     }
 
     /** Generate one line horizontal LinearLayout
@@ -130,12 +135,7 @@ public class QuestFragment extends Fragment {
         choiceLayout.setOrientation(LinearLayout.HORIZONTAL);
         final CheckBox checkBox = new CheckBox(getActivity());
         checkBox.setChecked(mQuest.getUserCheck(index));
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mQuest.setUserAnswer(index, isChecked);
-            }
-        });
+        checkBox.setFocusable(false);
         choiceLayout.addView(checkBox);
         TextView textAnswer = new TextView(getActivity());
         textAnswer.setText(mQuest.getChoices().get(index));
@@ -144,7 +144,7 @@ public class QuestFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 checkBox.toggle();
-                mQuest.toggleUserAnswerCheck(index);
+                mUserChecks[index] = !mUserChecks[index];
             }
         });
         return choiceLayout;

@@ -1,8 +1,8 @@
-package ru.balezz.odscards;
+package ru.balezz.odsquiz;
 
 import androidx.fragment.app.Fragment;
 
-import ru.balezz.odscards.controllers.LectureListFragment;
+import ru.balezz.odsquiz.controllers.LectureListFragment;
 
 public class LectureListActivity extends SingleFragmentActivity {
 

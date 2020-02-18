@@ -1,8 +1,8 @@
-package ru.balezz.odscards;
+package ru.balezz.odsquiz;
 
 import androidx.fragment.app.Fragment;
 
-import ru.balezz.odscards.controllers.FlashCardFragment;
+import ru.balezz.odsquiz.controllers.FlashCardFragment;
 
 public class FlashCardActivity extends SingleFragmentActivity {
 

@@ -1,4 +1,4 @@
-package ru.balezz.odscards.utils;
+package ru.balezz.odsquiz.utils;
 
 /*
 Original code found at:

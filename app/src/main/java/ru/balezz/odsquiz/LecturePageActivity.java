@@ -1,4 +1,4 @@
-package ru.balezz.odscards;
+package ru.balezz.odsquiz;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,7 +7,7 @@ import android.util.Log;
 
 import androidx.fragment.app.Fragment;
 
-import ru.balezz.odscards.controllers.LecturePageFragment;
+import ru.balezz.odsquiz.controllers.LecturePageFragment;
 
 public class LecturePageActivity extends SingleFragmentActivity {
 

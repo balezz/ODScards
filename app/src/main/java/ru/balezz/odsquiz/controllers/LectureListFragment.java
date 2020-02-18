@@ -1,4 +1,4 @@
-package ru.balezz.odscards.controllers;
+package ru.balezz.odsquiz.controllers;
 
 import android.content.Intent;
 import android.os.Build;
@@ -17,10 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import ru.balezz.odscards.LecturePageActivity;
-import ru.balezz.odscards.R;
-import ru.balezz.odscards.models.Lecture;
-import ru.balezz.odscards.models.LectureLab;
+import ru.balezz.odsquiz.LecturePageActivity;
+import ru.balezz.odsquiz.R;
+import ru.balezz.odsquiz.models.Lecture;
+import ru.balezz.odsquiz.models.LectureLab;
 
 
 public class LectureListFragment extends Fragment {

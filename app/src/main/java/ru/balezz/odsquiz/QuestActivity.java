@@ -1,8 +1,8 @@
-package ru.balezz.odscards;
+package ru.balezz.odsquiz;
 
 import androidx.fragment.app.Fragment;
 
-import ru.balezz.odscards.controllers.QuestFragment;
+import ru.balezz.odsquiz.controllers.QuestFragment;
 
 public class QuestActivity extends SingleFragmentActivity {
 

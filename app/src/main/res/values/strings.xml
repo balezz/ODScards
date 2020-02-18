@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ODS Cards</string>
+    <string name="app_name">ODS Quiz</string>
     <string name="my_progress">Прогресс обучения</string>
     <string name="total">Всего: 10</string>
     <string name="right">Правильно: 5</string>

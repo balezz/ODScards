@@ -1,4 +1,4 @@
-package ru.balezz.odscards.models;
+package ru.balezz.odsquiz.models;
 
 import android.net.Uri;
 

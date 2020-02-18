@@ -1,4 +1,4 @@
-package ru.balezz.odscards;
+package ru.balezz.odsquiz;
 
 import android.os.Bundle;
 

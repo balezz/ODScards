@@ -1,4 +1,4 @@
-package ru.balezz.odscards.models;
+package ru.balezz.odsquiz.models;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ public class Quest {
     private int mChoiceCount;
     private boolean[] mRightAnswers;
     private AnswerType mType;
-    private boolean[] mUserAnswers;
+    private boolean[] mUserChecks;
 
     Quest(AnswerType type, int choiceCount, boolean[] rightAnswers) {
         id = counter++;
@@ -19,7 +19,7 @@ public class Quest {
         mChoiceCount = choiceCount;
         mChoices = new ArrayList<>();
         mRightAnswers = rightAnswers;
-        mUserAnswers = new boolean[choiceCount];
+        mUserChecks = new boolean[choiceCount];
     }
 
     public String getQuestion() {
@@ -38,23 +38,23 @@ public class Quest {
         return mChoiceCount;
     }
 
-    public void setUserAnswer(int i, boolean answer) {
+    public void setUserCheck(int i, boolean isChecked) {
         if (i < mChoiceCount){
-            mUserAnswers[i] = answer;
+            mUserChecks[i] = isChecked;
         }
     }
 
-    public void toggleUserAnswerCheck(int index) {
-        mUserAnswers[index] = !mUserAnswers[index];
+    public void toggleUserCheck(int index) {
+        mUserChecks[index] = !mUserChecks[index];
     }
 
     public void setSingleUserCheck(int index) {
-        mUserAnswers = new boolean[mChoiceCount];
-        mUserAnswers[index] = true;
+        mUserChecks = new boolean[mChoiceCount];
+        mUserChecks[index] = true;
     }
 
     public boolean getUserCheck(int index) {
-        return mUserAnswers[index];
+        return mUserChecks[index];
     }
 
     void setQuestion(String question) {

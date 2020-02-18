@@ -1,4 +1,4 @@
-package ru.balezz.odscards.controllers;
+package ru.balezz.odsquiz.controllers;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,10 +19,10 @@ import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
-import ru.balezz.odscards.R;
-import ru.balezz.odscards.models.FlashCard;
-import ru.balezz.odscards.models.FlashCardLab;
-import ru.balezz.odscards.utils.Rotate3dAnimation;
+import ru.balezz.odsquiz.R;
+import ru.balezz.odsquiz.models.FlashCard;
+import ru.balezz.odsquiz.models.FlashCardLab;
+import ru.balezz.odsquiz.utils.Rotate3dAnimation;
 
 public class FlashCardFragment extends Fragment {
     public static FlashCardFragment newInstance() {
