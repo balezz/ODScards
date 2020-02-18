@@ -1,12 +1,15 @@
 package ru.balezz.odscards.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 enum AnswerType {
     Check, Radio
 }
 
 public class Quest {
     String mQuestion;
-    String [] mAnswers;
+    List<String> mAnswers;
     int mChoiceCount;
     boolean[] mRightAnswers;
     AnswerType mType;
@@ -14,7 +17,7 @@ public class Quest {
     public Quest(AnswerType type, int choiceCount, boolean[] rightAnswer) {
         mType = type;
         mChoiceCount = choiceCount;
-        mAnswers = new String[choiceCount];
+        mAnswers = new ArrayList<>();
         mRightAnswers = rightAnswer;
     }
 
@@ -30,11 +33,11 @@ public class Quest {
         mQuestion = question;
     }
 
-    public String[] getAnswers() {
+    public List<String> getAnswers() {
         return mAnswers;
     }
 
-    public void setAnswers(String[] answers) {
-        mAnswers = answers;
+    public void setChoice(String choice) {
+        mAnswers.add(choice);
     }
 }
