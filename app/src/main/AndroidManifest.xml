@@ -22,6 +22,7 @@
         <activity android:name=".LectureListActivity" />
         <activity android:name=".LecturePageActivity" />
         <activity android:name=".FlashCardActivity"/>
+        <activity android:name=".QuestActivity"/>
     </application>
 
 </manifest>

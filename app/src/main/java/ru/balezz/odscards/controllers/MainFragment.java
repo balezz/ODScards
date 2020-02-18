@@ -13,11 +13,13 @@ import androidx.fragment.app.Fragment;
 
 import ru.balezz.odscards.FlashCardActivity;
 import ru.balezz.odscards.LectureListActivity;
+import ru.balezz.odscards.QuestActivity;
 import ru.balezz.odscards.R;
 
 public class MainFragment extends Fragment {
     ImageView mLectureImageView;
     ImageView mFlashCardImageView;
+    ImageView mQuestImageView;
 
     public static MainFragment getInstance() {
         return new MainFragment();
@@ -50,6 +52,15 @@ public class MainFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getActivity(), FlashCardActivity.class);
+                startActivity(i);
+            }
+        });
+
+        mQuestImageView = (ImageView) v.findViewById(R.id.iv_quest);
+        mQuestImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), QuestActivity.class);
                 startActivity(i);
             }
         });

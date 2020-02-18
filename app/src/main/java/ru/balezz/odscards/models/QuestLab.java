@@ -13,9 +13,13 @@ public class QuestLab {
 
     private QuestLab() {
         Quest quest = new Quest(AnswerType.Radio, 4, 1);
-        quest.setQuest("Data Science - это ... ");
+        quest.setQuestion("Data Science - это ... ");
         quest.setAnswers(new String[]{"Наука о программах.", "Наука о данных.", "Наука о науке.",
         "Лженаука."});
         mQuests.add(quest);
     }
- }
+
+    public List<Quest> getQuests() {
+        return mQuests;
+    }
+}

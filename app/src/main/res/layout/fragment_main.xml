@@ -112,7 +112,7 @@
                     android:layout_height="80dp"
                     android:contentDescription="@string/item_title_1"
                     android:src="@drawable/ic_classroom"
-                    app:layout_constraintBottom_toTopOf="@+id/iv_training"
+                    app:layout_constraintBottom_toTopOf="@+id/iv_quest"
                     app:layout_constraintEnd_toStartOf="@+id/iv_flashcards"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -131,7 +131,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/iv_training"
+                    android:id="@+id/iv_quest"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:contentDescription="@string/item_title_3"
@@ -151,7 +151,7 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/iv_training"
+                    app:layout_constraintStart_toEndOf="@+id/iv_quest"
                     app:layout_constraintTop_toBottomOf="@+id/iv_flashcards" />
 
                 <TextView
@@ -180,9 +180,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@string/item_title_3"
-                    app:layout_constraintEnd_toEndOf="@+id/iv_training"
-                    app:layout_constraintStart_toStartOf="@+id/iv_training"
-                    app:layout_constraintTop_toBottomOf="@+id/iv_training" />
+                    app:layout_constraintEnd_toEndOf="@+id/iv_quest"
+                    app:layout_constraintStart_toStartOf="@+id/iv_quest"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_quest" />
 
                 <TextView
                     android:id="@+id/itemTitle4"

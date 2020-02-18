@@ -5,7 +5,7 @@ enum AnswerType {
 }
 
 public class Quest {
-    String mQuest;
+    String mQuestion;
     String [] mAnswers;
     int mRightAnswerIndex;
     AnswerType mType;
@@ -16,12 +16,12 @@ public class Quest {
         mRightAnswerIndex = rightAnswer;
     }
 
-    public String getQuest() {
-        return mQuest;
+    public String getQuestion() {
+        return mQuestion;
     }
 
-    public void setQuest(String quest) {
-        mQuest = quest;
+    public void setQuestion(String question) {
+        mQuestion = question;
     }
 
     public String[] getAnswers() {
