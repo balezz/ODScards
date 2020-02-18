@@ -5,10 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import java.util.List;
 
 import ru.balezz.odscards.R;
+import ru.balezz.odscards.models.AnswerType;
 import ru.balezz.odscards.models.Quest;
 import ru.balezz.odscards.models.QuestLab;
 
@@ -30,6 +34,7 @@ public class QuestFragment extends Fragment {
     private List<Quest> mQuests;
     private Quest mQuest;
     private int mQuestId;
+    private boolean[] mUserAnswers;
 
     public static QuestFragment newInstance() {
         return new QuestFragment();
@@ -80,8 +85,12 @@ public class QuestFragment extends Fragment {
     private void updateUI() {
         mQuestLayout.removeAllViews();
         mQuestLayout.addView(getQuestionView());
-        for (String choice : mQuest.getChoices()) {
-            mQuestLayout.addView(getChoiceView(choice));
+        if (mQuest.getType() == AnswerType.Check) {
+            for (int i = 0; i < mQuest.getChoiceCount(); i++) {
+                mQuestLayout.addView(getCheckView(i));
+            }
+        } else {
+            mQuestLayout.addView(getRadioView());
         }
     }
 
@@ -94,14 +103,50 @@ public class QuestFragment extends Fragment {
         return textView;
     }
 
-    private LinearLayout getChoiceView(String choice) {
+    /** Generate RadioGroup programmatically from mQuest.
+     *  We need to know witch item was selected to set user`s answer,
+     *  so for-loop with explicit index preferred here. */
+    private View getRadioView() {
+        RadioGroup radioGroup = new RadioGroup(getActivity());
+        for (int i = 0; i < mQuest.getChoiceCount(); i++) {
+            RadioButton radioButton = new RadioButton(getActivity());
+            radioButton.setText(mQuest.getChoices().get(i));
+            final int index = i;
+            radioButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mQuest.setSingleUserCheck(index);
+                }
+            });
+            radioGroup.addView(radioButton);
+        }
+        return radioGroup;
+    }
+
+    /** Generate one line horizontal LinearLayout
+     *  with CheckBox and question text */
+    private LinearLayout getCheckView(final int index) {
         LinearLayout choiceLayout = new LinearLayout(getActivity());
         choiceLayout.setOrientation(LinearLayout.HORIZONTAL);
-        CheckBox checkBox = new CheckBox(getActivity());
+        final CheckBox checkBox = new CheckBox(getActivity());
+        checkBox.setChecked(mQuest.getUserCheck(index));
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mQuest.setUserAnswer(index, isChecked);
+            }
+        });
         choiceLayout.addView(checkBox);
         TextView textAnswer = new TextView(getActivity());
-        textAnswer.setText(choice);
+        textAnswer.setText(mQuest.getChoices().get(index));
         choiceLayout.addView(textAnswer);
+        choiceLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkBox.toggle();
+                mQuest.toggleUserAnswerCheck(index);
+            }
+        });
         return choiceLayout;
     }
 }
