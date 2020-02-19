@@ -23,6 +23,7 @@ import ru.balezz.odsquiz.R;
 import ru.balezz.odsquiz.models.AnswerType;
 import ru.balezz.odsquiz.models.Quest;
 import ru.balezz.odsquiz.models.QuestLab;
+import ru.balezz.odsquiz.models.QuestSession;
 
 public class QuestFragment extends Fragment {
     private static final String TAG = "QuestFragment";
@@ -31,9 +32,9 @@ public class QuestFragment extends Fragment {
     private ImageButton mBackwardButton;
     private LinearLayout mQuestLayout;
     private List<Quest> mQuests;
+    private QuestSession mQuestSession;
     private Quest mQuest;
     private int mQuestId;
-    private boolean[] mUserChecks;
 
     public static QuestFragment newInstance() {
         return new QuestFragment();
@@ -45,7 +46,7 @@ public class QuestFragment extends Fragment {
         mQuests = QuestLab.getInstance().getQuests();
         mQuestId = 0;
         mQuest = mQuests.get(mQuestId);
-        mUserChecks = new boolean[mQuests.size() - 1];
+        mQuestSession = QuestSession.getInstance(mQuests);
     }
 
     @Nullable
@@ -124,8 +125,7 @@ public class QuestFragment extends Fragment {
     }
 
     private void setSingleUserCheck(int index) {
-        mUserChecks = new boolean[mQuests.size() - 1];
-        mUserChecks[index] = true;
+        // todo set QuestSession
     }
 
     /** Generate one line horizontal LinearLayout
@@ -134,18 +134,16 @@ public class QuestFragment extends Fragment {
         LinearLayout choiceLayout = new LinearLayout(getActivity());
         choiceLayout.setOrientation(LinearLayout.HORIZONTAL);
         final CheckBox checkBox = new CheckBox(getActivity());
-        checkBox.setChecked(mQuest.getUserCheck(index));
+        checkBox.setChecked(mQuestSession.getUserCheck(mQuestId, index));
         checkBox.setFocusable(false);
         choiceLayout.addView(checkBox);
         TextView textAnswer = new TextView(getActivity());
         textAnswer.setText(mQuest.getChoices().get(index));
         choiceLayout.addView(textAnswer);
-        choiceLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkBox.toggle();
-                mUserChecks[index] = !mUserChecks[index];
-            }
+        choiceLayout.setOnClickListener(v -> {
+            checkBox.toggle();
+            mQuestSession.toggleUserCheck(mQuestId, index);
+            // todo toggle QuestSession
         });
         return choiceLayout;
     }

@@ -11,7 +11,6 @@ public class Quest {
     private int mChoiceCount;
     private boolean[] mRightAnswers;
     private AnswerType mType;
-    private boolean[] mUserChecks;
 
     Quest(AnswerType type, int choiceCount, boolean[] rightAnswers) {
         id = counter++;
@@ -19,7 +18,6 @@ public class Quest {
         mChoiceCount = choiceCount;
         mChoices = new ArrayList<>();
         mRightAnswers = rightAnswers;
-        mUserChecks = new boolean[choiceCount];
     }
 
     public String getQuestion() {
@@ -36,25 +34,6 @@ public class Quest {
 
     public int getChoiceCount() {
         return mChoiceCount;
-    }
-
-    public void setUserCheck(int i, boolean isChecked) {
-        if (i < mChoiceCount){
-            mUserChecks[i] = isChecked;
-        }
-    }
-
-    public void toggleUserCheck(int index) {
-        mUserChecks[index] = !mUserChecks[index];
-    }
-
-    public void setSingleUserCheck(int index) {
-        mUserChecks = new boolean[mChoiceCount];
-        mUserChecks[index] = true;
-    }
-
-    public boolean getUserCheck(int index) {
-        return mUserChecks[index];
     }
 
     void setQuestion(String question) {
