@@ -11,6 +11,7 @@ public class Quest {
     private int mChoiceCount;
     private boolean[] mRightAnswers;
     private AnswerType mType;
+    private String mExplanation;
 
     Quest(AnswerType type, int choiceCount, boolean[] rightAnswers) {
         id = counter++;
@@ -45,4 +46,11 @@ public class Quest {
     }
 
 
+    public String getExplanation() {
+        return mExplanation;
+    }
+
+    public void setExplanation(String explanation) {
+        mExplanation = explanation;
+    }
 }

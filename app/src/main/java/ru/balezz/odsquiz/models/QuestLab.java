@@ -15,6 +15,7 @@ public class QuestLab {
         Quest quest;
         quest = new Quest(AnswerType.Check, 4, new boolean[]{true, false, false, false});
         quest.setQuestion("Data Science - это ... ");
+        quest.setExplanation("Весьма понятное объяснение.");
         quest.setChoice("Наука о программах.");
         quest.setChoice("Наука о данных.");
         quest.setChoice("Наука о науке.");
@@ -23,6 +24,7 @@ public class QuestLab {
 
         quest = new Quest(AnswerType.Radio, 4, new boolean[]{true, false, false, false});
         quest.setQuestion("В основе линейной регрессии лежит ");
+        quest.setExplanation("Весьма понятное объяснение.");
         quest.setChoice("Метод наименьших квадратов.");
         quest.setChoice("Теорема о разложении функции в ряд Тейлора.");
         quest.setChoice("Теорема о разложении функции в ряд Маклорена.");
@@ -31,6 +33,7 @@ public class QuestLab {
 
         quest = new Quest(AnswerType.Check, 4, new boolean[]{true, false, false, false});
         quest.setQuestion("В современных нейронных сетях используются алгоритмы ");
+        quest.setExplanation("Весьма понятное объяснение.");
         quest.setChoice("Обратное распространение ошибки.");
         quest.setChoice("Сверточная фильтрация.");
         quest.setChoice("Оптимальная фильтрация.");

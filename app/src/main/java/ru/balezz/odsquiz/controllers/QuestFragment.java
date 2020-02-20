@@ -60,22 +60,21 @@ public class QuestFragment extends Fragment {
         mForwardButton = (ImageButton) v.findViewById(R.id.btn_forward);
         mBackwardButton = (ImageButton) v.findViewById(R.id.btn_back);
 
-        mForwardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mQuestId < mQuests.size() - 1) {
-                    mQuest = mQuests.get(++mQuestId);
-                    updateUI();
-                }
+        mForwardButton.setOnClickListener(v1 -> {
+            if (!mQuestSession.isQuestAnswered(mQuestId)){
+                mQuestLayout.addView(getExplainationView());
+                mQuestSession.setQuestIsAnswered(mQuestId);
+                return;
+            }
+            if (mQuestId < mQuests.size() - 1) {
+                mQuest = mQuests.get(++mQuestId);
+                updateUI();
             }
         });
-        mBackwardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mQuestId > 0) {
-                    mQuest = mQuests.get(--mQuestId);
-                    updateUI();
-                }
+        mBackwardButton.setOnClickListener(v12 -> {
+            if (mQuestId > 0) {
+                mQuest = mQuests.get(--mQuestId);
+                updateUI();
             }
         });
         updateUI();
@@ -93,11 +92,23 @@ public class QuestFragment extends Fragment {
         } else {
             mQuestLayout.addView(getRadioView());
         }
+        if (mQuestSession.isQuestAnswered(mQuestId)){
+            mQuestLayout.addView(getExplainationView());
+        }
     }
 
     private TextView getQuestionView() {
         TextView textView = new TextView(getActivity());
         textView.setText(mQuest.getQuestion());
+        LayoutParams textViewParams = new LayoutParams(
+                LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        textView.setLayoutParams(textViewParams);
+        return textView;
+    }
+
+    private TextView getExplainationView() {
+        TextView textView = new TextView(getActivity());
+        textView.setText(mQuest.getExplanation());
         LayoutParams textViewParams = new LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         textView.setLayoutParams(textViewParams);
@@ -112,20 +123,12 @@ public class QuestFragment extends Fragment {
         for (int i = 0; i < mQuest.getChoiceCount(); i++) {
             RadioButton radioButton = new RadioButton(getActivity());
             radioButton.setText(mQuest.getChoices().get(i));
-            final int index = i;
-            radioButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    setSingleUserCheck(index);
-                }
-            });
             radioGroup.addView(radioButton);
+            final int index = i;
+            radioButton.setOnClickListener(
+                    v -> mQuestSession.setSingleUserCheck(mQuestId, index));
         }
         return radioGroup;
-    }
-
-    private void setSingleUserCheck(int index) {
-        // todo set QuestSession
     }
 
     /** Generate one line horizontal LinearLayout
@@ -135,16 +138,13 @@ public class QuestFragment extends Fragment {
         choiceLayout.setOrientation(LinearLayout.HORIZONTAL);
         final CheckBox checkBox = new CheckBox(getActivity());
         checkBox.setChecked(mQuestSession.getUserCheck(mQuestId, index));
-        checkBox.setFocusable(false);
+        checkBox.setOnCheckedChangeListener(
+                (buttonView, isChecked) -> mQuestSession.toggleUserCheck(mQuestId, index));
         choiceLayout.addView(checkBox);
         TextView textAnswer = new TextView(getActivity());
         textAnswer.setText(mQuest.getChoices().get(index));
         choiceLayout.addView(textAnswer);
-        choiceLayout.setOnClickListener(v -> {
-            checkBox.toggle();
-            mQuestSession.toggleUserCheck(mQuestId, index);
-            // todo toggle QuestSession
-        });
+        choiceLayout.setOnClickListener(v -> checkBox.toggle());
         return choiceLayout;
     }
 }
