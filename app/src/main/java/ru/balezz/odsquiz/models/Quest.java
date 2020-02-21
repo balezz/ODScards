@@ -45,6 +45,9 @@ public class Quest {
         mChoices.add(choice);
     }
 
+    public boolean[] getRightAnswers() {
+        return mRightAnswers;
+    }
 
     public String getExplanation() {
         return mExplanation;

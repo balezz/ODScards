@@ -2,6 +2,7 @@ package ru.balezz.odsquiz.models;
 
 import android.util.Log;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class QuestSession {
@@ -36,8 +37,12 @@ public class QuestSession {
     public void setSingleUserCheck(int questId, int index) {
         Log.d(TAG, "setSingleUserCheck: " + questId + ", " + index);
         for (int i = 0; i < mUserChecks[questId].length; i++) {
-            mUserChecks[questId][i] = i == index - 1;
+            if (i == (index))
+                mUserChecks[questId][i] = true;
+            else
+                mUserChecks[questId][i] = false;
         }
+        Log.d(TAG, "setSingleUserCheck: " + Arrays.toString(mUserChecks[questId]));
     }
 
     public void setQuestIsAnswered(int questId) {
@@ -46,5 +51,16 @@ public class QuestSession {
 
     public boolean isQuestAnswered(int questId) {
         return mQuestIsAnswered[questId];
+    }
+
+    public boolean checkAnswerIsRight(int questId) {
+        boolean[] rightAnswers = QuestLab.getInstance().getQuests().get(questId).getRightAnswers();
+        Log.d(TAG, "checkAnswerIsRight: rightAnswers: " + Arrays.toString(rightAnswers));
+        Log.d(TAG, "checkAnswerIsRight: checkedAnswers: " + Arrays.toString(mUserChecks[questId]));
+        for (int i = 0; i < mUserChecks[questId].length; i++) {
+            if (mUserChecks[questId][i] != rightAnswers[i])
+                return false;
+        }
+        return true;
     }
 }

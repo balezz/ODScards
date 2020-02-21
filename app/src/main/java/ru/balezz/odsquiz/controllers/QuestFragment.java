@@ -31,10 +31,14 @@ public class QuestFragment extends Fragment {
     private ImageButton mForwardButton;
     private ImageButton mBackwardButton;
     private LinearLayout mQuestLayout;
+    private TextView mQuestCounterView;
+    private TextView mQuestStasticView;
     private List<Quest> mQuests;
     private QuestSession mQuestSession;
     private Quest mQuest;
     private int mQuestId;
+    private int mQuestAnsweredRightCount;
+    private int mQuestAnsweredWrongCount;
 
     public static QuestFragment newInstance() {
         return new QuestFragment();
@@ -59,11 +63,14 @@ public class QuestFragment extends Fragment {
         mQuestLayout = (LinearLayout) v.findViewById(R.id.quest_layout);
         mForwardButton = (ImageButton) v.findViewById(R.id.btn_forward);
         mBackwardButton = (ImageButton) v.findViewById(R.id.btn_back);
+        mQuestCounterView = (TextView) v.findViewById(R.id.text_quest_count);
+        mQuestStasticView = (TextView) v.findViewById(R.id.text_statistic);
 
         mForwardButton.setOnClickListener(v1 -> {
             if (!mQuestSession.isQuestAnswered(mQuestId)){
-                mQuestLayout.addView(getExplainationView());
+                mQuestLayout.addView(getExplanationView());
                 mQuestSession.setQuestIsAnswered(mQuestId);
+                updateStatistic(mQuestSession.checkAnswerIsRight(mQuestId));
                 return;
             }
             if (mQuestId < mQuests.size() - 1) {
@@ -82,7 +89,17 @@ public class QuestFragment extends Fragment {
         return v;
     }
 
+    private void updateStatistic(boolean checkAnswerIsRight) {
+        if (checkAnswerIsRight) {
+            mQuestAnsweredRightCount++;
+        } else {
+            mQuestAnsweredWrongCount++;
+        }
+        updateStatisticViews();
+    }
+
     private void updateUI() {
+        updateStatisticViews();
         mQuestLayout.removeAllViews();
         mQuestLayout.addView(getQuestionView());
         if (mQuest.getType() == AnswerType.Check) {
@@ -93,7 +110,7 @@ public class QuestFragment extends Fragment {
             mQuestLayout.addView(getRadioView());
         }
         if (mQuestSession.isQuestAnswered(mQuestId)){
-            mQuestLayout.addView(getExplainationView());
+            mQuestLayout.addView(getExplanationView());
         }
     }
 
@@ -106,7 +123,7 @@ public class QuestFragment extends Fragment {
         return textView;
     }
 
-    private TextView getExplainationView() {
+    private TextView getExplanationView() {
         TextView textView = new TextView(getActivity());
         textView.setText(mQuest.getExplanation());
         LayoutParams textViewParams = new LayoutParams(
@@ -146,5 +163,13 @@ public class QuestFragment extends Fragment {
         choiceLayout.addView(textAnswer);
         choiceLayout.setOnClickListener(v -> checkBox.toggle());
         return choiceLayout;
+    }
+
+    private void updateStatisticViews() {
+        String questCountString = getString(R.string.quest_counter, mQuestId+1);
+        mQuestCounterView.setText(questCountString);
+        String questStatisticString = getString(
+                R.string.quest_statistic, mQuestAnsweredRightCount, mQuestAnsweredWrongCount);
+        mQuestStasticView.setText(questStatisticString);
     }
 }

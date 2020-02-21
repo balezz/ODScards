@@ -37,6 +37,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/text_quest_count"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
@@ -44,11 +45,12 @@
             android:text="@string/quest_counter"
             />
         <TextView
+            android:id="@+id/text_statistic"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:gravity="center"
-            android:text="@string/quest_stat"
+            android:text="@string/quest_statistic"
             />
 
     </LinearLayout>
