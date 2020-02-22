@@ -13,4 +13,8 @@
         <item name="android:background">@drawable/btn_normal</item>
     </style>
 
+    <style name="QuestText" >
+        <item name="android:textSize">20sp</item>
+    </style>
+
 </resources>

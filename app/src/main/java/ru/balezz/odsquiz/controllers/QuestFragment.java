@@ -1,6 +1,7 @@
 package ru.balezz.odsquiz.controllers;
 
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.LinearLayout.LayoutParams;
 
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -32,7 +34,10 @@ public class QuestFragment extends Fragment {
     private ImageButton mBackwardButton;
     private LinearLayout mQuestLayout;
     private TextView mQuestCounterView;
-    private TextView mQuestStasticView;
+    private TextView mRightCountView;
+    private TextView mWrongCountView;
+    private ProgressBar mProgressBar;
+
     private List<Quest> mQuests;
     private QuestSession mQuestSession;
     private Quest mQuest;
@@ -64,8 +69,11 @@ public class QuestFragment extends Fragment {
         mForwardButton = (ImageButton) v.findViewById(R.id.btn_forward);
         mBackwardButton = (ImageButton) v.findViewById(R.id.btn_back);
         mQuestCounterView = (TextView) v.findViewById(R.id.text_quest_count);
-        mQuestStasticView = (TextView) v.findViewById(R.id.text_statistic);
+        mRightCountView = (TextView) v.findViewById(R.id.right_count);
+        mWrongCountView = (TextView) v.findViewById(R.id.wrong_count);
+        mProgressBar = (ProgressBar) v.findViewById(R.id.progressBar);
 
+        mProgressBar.setMax(mQuests.size() - 1);
         mForwardButton.setOnClickListener(v1 -> {
             if (!mQuestSession.isQuestAnswered(mQuestId)){
                 mQuestLayout.addView(getExplanationView());
@@ -78,7 +86,7 @@ public class QuestFragment extends Fragment {
                 updateUI();
             }
         });
-        mBackwardButton.setOnClickListener(v12 -> {
+        mBackwardButton.setOnClickListener(v2 -> {
             if (mQuestId > 0) {
                 mQuest = mQuests.get(--mQuestId);
                 updateUI();
@@ -99,6 +107,7 @@ public class QuestFragment extends Fragment {
     }
 
     private void updateUI() {
+        mProgressBar.setProgress(mQuestId);
         updateStatisticViews();
         mQuestLayout.removeAllViews();
         mQuestLayout.addView(getQuestionView());
@@ -115,10 +124,13 @@ public class QuestFragment extends Fragment {
     }
 
     private TextView getQuestionView() {
-        TextView textView = new TextView(getActivity());
+        TextView textView = new TextView(
+                new ContextThemeWrapper(getActivity(), R.style.QuestText),
+                null, 0);
         textView.setText(mQuest.getQuestion());
         LayoutParams textViewParams = new LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        textView.setPadding(0, 0, 0, 16);
         textView.setLayoutParams(textViewParams);
         return textView;
     }
@@ -139,6 +151,8 @@ public class QuestFragment extends Fragment {
         RadioGroup radioGroup = new RadioGroup(getActivity());
         for (int i = 0; i < mQuest.getChoiceCount(); i++) {
             RadioButton radioButton = new RadioButton(getActivity());
+            radioButton.setTextSize(20);
+            radioButton.setPadding(0, 8, 0, 8);
             radioButton.setText(mQuest.getChoices().get(i));
             radioGroup.addView(radioButton);
             final int index = i;
@@ -153,12 +167,15 @@ public class QuestFragment extends Fragment {
     private LinearLayout getCheckView(final int index) {
         LinearLayout choiceLayout = new LinearLayout(getActivity());
         choiceLayout.setOrientation(LinearLayout.HORIZONTAL);
+        choiceLayout.setPadding(0, 16, 0, 16);
         final CheckBox checkBox = new CheckBox(getActivity());
         checkBox.setChecked(mQuestSession.getUserCheck(mQuestId, index));
         checkBox.setOnCheckedChangeListener(
                 (buttonView, isChecked) -> mQuestSession.toggleUserCheck(mQuestId, index));
         choiceLayout.addView(checkBox);
-        TextView textAnswer = new TextView(getActivity());
+        TextView textAnswer = new TextView(
+                new ContextThemeWrapper(getActivity(), R.style.QuestText),
+                null, 0);
         textAnswer.setText(mQuest.getChoices().get(index));
         choiceLayout.addView(textAnswer);
         choiceLayout.setOnClickListener(v -> checkBox.toggle());
@@ -168,8 +185,8 @@ public class QuestFragment extends Fragment {
     private void updateStatisticViews() {
         String questCountString = getString(R.string.quest_counter, mQuestId+1);
         mQuestCounterView.setText(questCountString);
-        String questStatisticString = getString(
-                R.string.quest_statistic, mQuestAnsweredRightCount, mQuestAnsweredWrongCount);
-        mQuestStasticView.setText(questStatisticString);
+        mRightCountView.setText(String.valueOf(mQuestAnsweredRightCount));
+        mWrongCountView.setText(String.valueOf(mQuestAnsweredWrongCount));
+
     }
 }
