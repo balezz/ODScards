@@ -1,12 +1,14 @@
 package ru.balezz.odsquiz.controllers;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +17,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import ru.balezz.odsquiz.LecturePageActivity;
@@ -33,16 +37,22 @@ public class LectureListFragment extends Fragment {
                                     implements View.OnClickListener {
         TextView mTitle;
         Lecture mLecture;
+        ImageView mIconView;
 
         public LectureHolder(LayoutInflater inflater, ViewGroup parent) {
             super(inflater.inflate(R.layout.lecture_list_item, parent, false));
             itemView.setOnClickListener(this);
             mTitle = itemView.findViewById(R.id.lecture_item_title);
+            mIconView = itemView.findViewById(R.id.lectureIcon);
         }
 
         public void bind(Lecture lecture) {
             mLecture = lecture;
             mTitle.setText(lecture.getTitle());
+            Drawable d = loadFromAsset(lecture.getIconPath());
+            if (d != null) {
+                mIconView.setImageDrawable(d);
+            }
         }
 
         @Override
@@ -88,14 +98,14 @@ public class LectureListFragment extends Fragment {
         }
     }
 
+    public static LectureListFragment newInstance() {
+        return new LectureListFragment();
+    }
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-    }
-
-    public static LectureListFragment newInstance() {
-        return new LectureListFragment();
     }
 
     @Nullable
@@ -118,5 +128,17 @@ public class LectureListFragment extends Fragment {
             mAdapter.setLectures(lectures);
             mAdapter.notifyDataSetChanged();
         }
+    }
+
+    private Drawable loadFromAsset(String fileName) {
+        try {
+            InputStream is = getActivity().getAssets().open("ml_icons/" + fileName);
+            Drawable d = Drawable.createFromStream(is, null);
+            return d;
+        } catch (IOException ioe) {
+            Log.d(TAG, "loadFromAsset: failed");
+            return null;
+        }
+
     }
 }

@@ -8,12 +8,10 @@ public class Lecture {
     private Course mCourse;
     private String mTitle;
     private Uri mUri;
-    private String mBody;
+    private String mIconPath;
 
     Lecture(String title) {
         mTitle = title;
-        mUri = Uri.parse("https://habr.com/ru/company/ods/blog/322626/");
-        mBody = "Это заглушка для текста лекции.";
     }
 
     public String getTitle() {
@@ -26,5 +24,13 @@ public class Lecture {
 
     public void setUri(Uri uri) {
         mUri = uri;
+    }
+
+    public String getIconPath() {
+        return mIconPath;
+    }
+
+    public void setIconPath(String iconPath) {
+        mIconPath = iconPath;
     }
 }
