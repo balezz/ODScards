@@ -7,23 +7,35 @@ import java.util.List;
 
 public class QuestSession {
     private static final String TAG = "QuestSession";
+    private static QuestSession ourInstance;
     private boolean[][] mUserChecks;
     private boolean[] mQuestIsAnswered;
-    private boolean[] mQuestIsAnsweredRight;
-    private int mSize;
+    private int mCurrentId;
+    private int mRightAnswerCount;
+    private int mWrongAnswerCount;
 
     public static QuestSession getInstance(List<Quest> quests) {
-        return new QuestSession(quests);
+        if (ourInstance == null) {
+            ourInstance = new QuestSession(quests);
+        }
+        return ourInstance;
     }
 
     private QuestSession(List<Quest> quests){
-        mSize = quests.size();
-        mUserChecks = new boolean[mSize][];
-        mQuestIsAnswered = new boolean[mSize];
-        mQuestIsAnsweredRight = new boolean[mSize];
+        int size = quests.size();
+        mUserChecks = new boolean[size][];
+        mQuestIsAnswered = new boolean[size];
         for (int i = 0; i < quests.size(); i++) {
             mUserChecks[i] = new boolean[quests.get(i).getChoiceCount()];
         }
+    }
+
+    public int getCurrentId() {
+        return mCurrentId;
+    }
+
+    public void setCurrentId(int currentId) {
+        mCurrentId = currentId;
     }
 
     public boolean getUserCheck(int questId, int index) {
@@ -62,5 +74,21 @@ public class QuestSession {
                 return false;
         }
         return true;
+    }
+
+    public void incrementWrong() {
+        mWrongAnswerCount++;
+    }
+
+    public void incrementRight() {
+        mRightAnswerCount++;
+    }
+
+    public String getRightCount() {
+        return String.valueOf(mRightAnswerCount);
+    }
+
+    public String getWrongCount() {
+        return String.valueOf(mWrongAnswerCount);
     }
 }

@@ -42,8 +42,6 @@ public class QuestFragment extends Fragment {
     private QuestSession mQuestSession;
     private Quest mQuest;
     private int mQuestId;
-    private int mQuestAnsweredRightCount;
-    private int mQuestAnsweredWrongCount;
 
     public static QuestFragment newInstance() {
         return new QuestFragment();
@@ -53,9 +51,9 @@ public class QuestFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mQuests = QuestLab.getInstance().getQuests();
-        mQuestId = 0;
-        mQuest = mQuests.get(mQuestId);
         mQuestSession = QuestSession.getInstance(mQuests);
+        mQuestId = mQuestSession.getCurrentId();
+        mQuest = mQuests.get(mQuestId);
     }
 
     @Nullable
@@ -72,8 +70,8 @@ public class QuestFragment extends Fragment {
         mRightCountView = (TextView) v.findViewById(R.id.right_count);
         mWrongCountView = (TextView) v.findViewById(R.id.wrong_count);
         mProgressBar = (ProgressBar) v.findViewById(R.id.progressBar);
-
         mProgressBar.setMax(mQuests.size() - 1);
+
         mForwardButton.setOnClickListener(v1 -> {
             if (!mQuestSession.isQuestAnswered(mQuestId)){
                 mQuestLayout.addView(getExplanationView());
@@ -82,13 +80,15 @@ public class QuestFragment extends Fragment {
                 return;
             }
             if (mQuestId < mQuests.size() - 1) {
-                mQuest = mQuests.get(++mQuestId);
+                mQuestSession.setCurrentId(++mQuestId);
+                mQuest = mQuests.get(mQuestId);
                 updateUI();
             }
         });
         mBackwardButton.setOnClickListener(v2 -> {
             if (mQuestId > 0) {
-                mQuest = mQuests.get(--mQuestId);
+                mQuestSession.setCurrentId(--mQuestId);
+                mQuest = mQuests.get(mQuestId);
                 updateUI();
             }
         });
@@ -97,11 +97,13 @@ public class QuestFragment extends Fragment {
         return v;
     }
 
+
+
     private void updateStatistic(boolean checkAnswerIsRight) {
         if (checkAnswerIsRight) {
-            mQuestAnsweredRightCount++;
+            mQuestSession.incrementRight();
         } else {
-            mQuestAnsweredWrongCount++;
+            mQuestSession.incrementWrong();
         }
         updateStatisticViews();
     }
@@ -185,8 +187,8 @@ public class QuestFragment extends Fragment {
     private void updateStatisticViews() {
         String questCountString = getString(R.string.quest_counter, mQuestId+1);
         mQuestCounterView.setText(questCountString);
-        mRightCountView.setText(String.valueOf(mQuestAnsweredRightCount));
-        mWrongCountView.setText(String.valueOf(mQuestAnsweredWrongCount));
+        mRightCountView.setText(mQuestSession.getRightCount());
+        mWrongCountView.setText(mQuestSession.getWrongCount());
 
     }
 }
