@@ -3,6 +3,7 @@ package ru.balezz.odsquiz.models;
 import android.util.Log;
 
 import java.util.Arrays;
+import java.util.BitSet;
 import java.util.List;
 
 public class QuestSession {
@@ -65,12 +66,13 @@ public class QuestSession {
         return mQuestIsAnswered[questId];
     }
 
+    // todo
     public boolean checkAnswerIsRight(int questId) {
-        boolean[] rightAnswers = QuestLab.getInstance().getQuests().get(questId).getRightAnswers();
-        Log.d(TAG, "checkAnswerIsRight: rightAnswers: " + Arrays.toString(rightAnswers));
+        BitSet rightAnswers = QuestLab.getInstance().getQuests().get(questId).getRightAnswers();
+        Log.d(TAG, "checkAnswerIsRight: rightAnswers: " + rightAnswers.toString());
         Log.d(TAG, "checkAnswerIsRight: checkedAnswers: " + Arrays.toString(mUserChecks[questId]));
         for (int i = 0; i < mUserChecks[questId].length; i++) {
-            if (mUserChecks[questId][i] != rightAnswers[i])
+            if (mUserChecks[questId][i] != rightAnswers.get(i))
                 return false;
         }
         return true;

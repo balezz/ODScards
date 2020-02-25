@@ -26,6 +26,7 @@ import ru.balezz.odsquiz.models.AnswerType;
 import ru.balezz.odsquiz.models.Quest;
 import ru.balezz.odsquiz.models.QuestLab;
 import ru.balezz.odsquiz.models.QuestSession;
+import ru.balezz.odsquiz.utils.QuestsFetchr;
 
 public class QuestFragment extends Fragment {
     private static final String TAG = "QuestFragment";
@@ -50,7 +51,8 @@ public class QuestFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mQuests = QuestLab.getInstance().getQuests();
+        mQuests = new QuestsFetchr(getActivity()).fetchItems();
+        QuestLab.getInstance().setQuests(mQuests);
         mQuestSession = QuestSession.getInstance(mQuests);
         mQuestId = mQuestSession.getCurrentId();
         mQuest = mQuests.get(mQuestId);
@@ -96,8 +98,6 @@ public class QuestFragment extends Fragment {
 
         return v;
     }
-
-
 
     private void updateStatistic(boolean checkAnswerIsRight) {
         if (checkAnswerIsRight) {

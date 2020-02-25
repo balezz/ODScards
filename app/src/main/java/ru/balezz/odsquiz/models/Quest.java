@@ -1,28 +1,37 @@
 package ru.balezz.odsquiz.models;
 
 import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.List;
 
 public class Quest {
     private static int counter;
-    private int id;
+    private int mId;
     private String mQuestion;
     private List<String> mChoices;
     private int mChoiceCount;
-    private boolean[] mRightAnswers;
+    private BitSet mRightAnswers;
     private AnswerType mType;
     private String mExplanation;
 
-    Quest(AnswerType type, int choiceCount, boolean[] rightAnswers) {
-        id = counter++;
-        mType = type;
-        mChoiceCount = choiceCount;
-        mChoices = new ArrayList<>();
-        mRightAnswers = rightAnswers;
+    public Quest() {
+        mType = AnswerType.Check;
+    }
+
+    public int getId() {
+        return mId;
+    }
+
+    public void setId(int id) {
+        mId = id;
     }
 
     public String getQuestion() {
         return mQuestion;
+    }
+
+    public void setQuestion(String question) {
+        mQuestion = question;
     }
 
     public List<String> getChoices() {
@@ -37,15 +46,17 @@ public class Quest {
         return mChoiceCount;
     }
 
-    void setQuestion(String question) {
-        mQuestion = question;
+
+
+    public void setChoices(List<String> choices) {
+        mChoices = choices;
     }
 
-    void setChoice(String choice) {
-        mChoices.add(choice);
+    public void setRightAnswers(BitSet rightAnswers) {
+        mRightAnswers = rightAnswers;
     }
 
-    public boolean[] getRightAnswers() {
+    public BitSet getRightAnswers() {
         return mRightAnswers;
     }
 
