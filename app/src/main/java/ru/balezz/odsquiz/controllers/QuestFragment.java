@@ -142,6 +142,7 @@ public class QuestFragment extends Fragment {
         textView.setText(mQuest.getExplanation());
         LayoutParams textViewParams = new LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+        textViewParams.setMargins(0, 8, 0, 0);
         textView.setLayoutParams(textViewParams);
         return textView;
     }
@@ -169,7 +170,7 @@ public class QuestFragment extends Fragment {
     private LinearLayout getCheckView(final int index) {
         LinearLayout choiceLayout = new LinearLayout(getActivity());
         choiceLayout.setOrientation(LinearLayout.HORIZONTAL);
-        choiceLayout.setPadding(0, 16, 0, 16);
+        choiceLayout.setPadding(0, 8, 0, 8);
         final CheckBox checkBox = new CheckBox(getActivity());
         checkBox.setChecked(mQuestSession.getUserCheck(mQuestId, index));
         checkBox.setOnCheckedChangeListener(

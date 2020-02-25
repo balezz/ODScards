@@ -14,7 +14,7 @@
     </style>
 
     <style name="QuestText" >
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
 </resources>
