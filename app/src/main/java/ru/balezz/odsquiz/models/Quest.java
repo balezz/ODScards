@@ -46,8 +46,6 @@ public class Quest {
         return mChoices.size() - 1;
     }
 
-
-
     public void setChoices(List<String> choices) {
         mChoices = choices;
     }

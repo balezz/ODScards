@@ -25,7 +25,6 @@ import java.util.List;
 import ru.balezz.odsquiz.R;
 import ru.balezz.odsquiz.models.AnswerType;
 import ru.balezz.odsquiz.models.Quest;
-import ru.balezz.odsquiz.models.QuestLab;
 import ru.balezz.odsquiz.models.QuestSession;
 import ru.balezz.odsquiz.utils.QuestsFetchr;
 
@@ -180,6 +179,7 @@ public class QuestFragment extends Fragment {
         TextView textAnswer = new TextView(
                 new ContextThemeWrapper(getActivity(), R.style.QuestText),
                 null, 0);
+        textAnswer.setPadding(0, 8, 0, 8);
         String choiceString = mQuest.getChoices().get(index);
         Log.d(TAG, "getCheckView: " + choiceString);
         textAnswer.setText(choiceString);
@@ -189,7 +189,8 @@ public class QuestFragment extends Fragment {
     }
 
     private void updateStatisticViews() {
-        String questCountString = getString(R.string.quest_counter, mQuestId+1);
+        String questCountString = getString(R.string.quest_counter,
+                mQuestId+1, mQuests.size());
         mQuestCounterView.setText(questCountString);
         mRightCountView.setText(mQuestSession.getRightCount());
         mWrongCountView.setText(mQuestSession.getWrongCount());
