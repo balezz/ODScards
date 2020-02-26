@@ -22,15 +22,18 @@ import ru.balezz.odsquiz.models.Quest;
 public class QuestsFetchr {
     private static final String TAG = "QuestsFetchr";
     Activity mActivity;
-    List<Quest> mQuests = new ArrayList<>();
+    List<Quest> mQuests;
 
     public QuestsFetchr(Activity activity) {
         mActivity = activity;
     }
 
     public List<Quest> fetchItems() {
-        String jsonString = loadStringFromAssets("OdsQuiz.json");
-        parseItems(mQuests, jsonString);
+        if (mQuests == null) {
+            mQuests = new ArrayList<>();
+            String jsonString = loadStringFromAssets("OdsQuiz.json");
+            parseItems(mQuests, jsonString);
+        }
         return mQuests;
     }
 

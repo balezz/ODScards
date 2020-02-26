@@ -2,6 +2,7 @@ package ru.balezz.odsquiz.models;
 
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.List;
@@ -9,7 +10,8 @@ import java.util.List;
 public class QuestSession {
     private static final String TAG = "QuestSession";
     private static QuestSession ourInstance;
-    private boolean[][] mUserChecks;
+    private List<Quest> mQuests;
+    private List<BitSet> mUserChecks;
     private boolean[] mQuestIsAnswered;
     private int mCurrentId;
     private int mRightAnswerCount;
@@ -23,11 +25,11 @@ public class QuestSession {
     }
 
     private QuestSession(List<Quest> quests){
-        int size = quests.size();
-        mUserChecks = new boolean[size][];
-        mQuestIsAnswered = new boolean[size];
+        mQuests = quests;
+        mQuestIsAnswered = new boolean[quests.size()];
+        mUserChecks = new ArrayList<BitSet>(quests.size());
         for (int i = 0; i < quests.size(); i++) {
-            mUserChecks[i] = new boolean[quests.get(i).getChoiceCount()];
+            mUserChecks.add(new BitSet());
         }
     }
 
@@ -40,22 +42,18 @@ public class QuestSession {
     }
 
     public boolean getUserCheck(int questId, int index) {
-        return mUserChecks[questId][index];
+        return mUserChecks.get(questId).get(index);
     }
 
     public void toggleUserCheck(int questId, int index) {
-        mUserChecks[questId][index] = ! mUserChecks[questId][index];
+        mUserChecks.get(questId).flip(index);
     }
 
     public void setSingleUserCheck(int questId, int index) {
         Log.d(TAG, "setSingleUserCheck: " + questId + ", " + index);
-        for (int i = 0; i < mUserChecks[questId].length; i++) {
-            if (i == (index))
-                mUserChecks[questId][i] = true;
-            else
-                mUserChecks[questId][i] = false;
-        }
-        Log.d(TAG, "setSingleUserCheck: " + Arrays.toString(mUserChecks[questId]));
+        mUserChecks.get(questId).clear();
+        mUserChecks.get(questId).set(index);
+        Log.d(TAG, "setSingleUserCheck: " + mUserChecks.get(questId).toString());
     }
 
     public void setQuestIsAnswered(int questId) {
@@ -66,16 +64,12 @@ public class QuestSession {
         return mQuestIsAnswered[questId];
     }
 
-    // todo
+
     public boolean checkAnswerIsRight(int questId) {
-        BitSet rightAnswers = QuestLab.getInstance().getQuests().get(questId).getRightAnswers();
+        BitSet rightAnswers = mQuests.get(questId).getRightAnswers();
         Log.d(TAG, "checkAnswerIsRight: rightAnswers: " + rightAnswers.toString());
-        Log.d(TAG, "checkAnswerIsRight: checkedAnswers: " + Arrays.toString(mUserChecks[questId]));
-        for (int i = 0; i < mUserChecks[questId].length; i++) {
-            if (mUserChecks[questId][i] != rightAnswers.get(i))
-                return false;
-        }
-        return true;
+        Log.d(TAG, "checkAnswerIsRight: checkedAnswers: " + mUserChecks.get(questId).toString());
+        return mUserChecks.get(questId).equals(rightAnswers);
     }
 
     public void incrementWrong() {

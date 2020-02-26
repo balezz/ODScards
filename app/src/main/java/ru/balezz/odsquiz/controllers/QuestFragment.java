@@ -1,6 +1,7 @@
 package ru.balezz.odsquiz.controllers;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,8 +52,8 @@ public class QuestFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // todo move to background task
         mQuests = new QuestsFetchr(getActivity()).fetchItems();
-        QuestLab.getInstance().setQuests(mQuests);
         mQuestSession = QuestSession.getInstance(mQuests);
         mQuestId = mQuestSession.getCurrentId();
         mQuest = mQuests.get(mQuestId);
@@ -179,7 +180,9 @@ public class QuestFragment extends Fragment {
         TextView textAnswer = new TextView(
                 new ContextThemeWrapper(getActivity(), R.style.QuestText),
                 null, 0);
-        textAnswer.setText(mQuest.getChoices().get(index));
+        String choiceString = mQuest.getChoices().get(index);
+        Log.d(TAG, "getCheckView: " + choiceString);
+        textAnswer.setText(choiceString);
         choiceLayout.addView(textAnswer);
         choiceLayout.setOnClickListener(v -> checkBox.toggle());
         return choiceLayout;
