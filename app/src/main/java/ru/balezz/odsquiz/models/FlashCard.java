@@ -7,7 +7,7 @@ public class FlashCard {
     String mAnswer;
     boolean mKnown;
 
-    FlashCard() {
+    public FlashCard() {
         this.id = counter++;
     }
 

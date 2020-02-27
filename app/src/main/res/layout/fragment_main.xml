@@ -215,7 +215,6 @@
                     android:text="@string/details"
                     android:textAppearance="?attr/textAppearanceHeadline6" />
 
-
             </com.google.android.material.card.MaterialCardView>
 
 

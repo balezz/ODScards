@@ -21,7 +21,7 @@ import java.util.List;
 
 import ru.balezz.odsquiz.R;
 import ru.balezz.odsquiz.models.FlashCard;
-import ru.balezz.odsquiz.models.FlashCardLab;
+import ru.balezz.odsquiz.utils.FlashCardLab;
 import ru.balezz.odsquiz.utils.Rotate3dAnimation;
 
 public class FlashCardFragment extends Fragment {
@@ -43,7 +43,7 @@ public class FlashCardFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mFlashCards = FlashCardLab.getInstance().getFlashCards();
+        mFlashCards = FlashCardLab.getInstance(getActivity()).getFlashCards();
         mFlashCard = mFlashCards.get(mFlashId);
     }
 
@@ -56,43 +56,31 @@ public class FlashCardFragment extends Fragment {
 
         mCardView = (MaterialCardView) v.findViewById(R.id.card_face);
         mCardText = (TextView) v.findViewById(R.id.card_text);
-        mCardView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    mCardFaceVisible = !mCardFaceVisible;
-                    applyRotation();
-            }
+        mCardView.setOnClickListener(v1 -> {
+                mCardFaceVisible = !mCardFaceVisible;
+                applyRotation();
         });
+        mCardText.setText(mFlashCard.getQuestion());
 
         mForwardButton = (ImageButton) v.findViewById(R.id.btn_forward);
         mBackwardButton = (ImageButton) v.findViewById(R.id.btn_back);
-        mForwardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mFlashId < mFlashCards.size() - 1) {
-                    mFlashCard = mFlashCards.get(++mFlashId);
-                    updateUI();
-                }
+        mForwardButton.setOnClickListener(v2 -> {
+            if (mFlashId < mFlashCards.size() - 1) {
+                mFlashCard = mFlashCards.get(++mFlashId);
+                updateUI();
             }
         });
-        mBackwardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (mFlashId > 0) {
-                    mFlashCard = mFlashCards.get(--mFlashId);
-                    updateUI();
-                }
+        mBackwardButton.setOnClickListener(v3 -> {
+            if (mFlashId > 0) {
+                mFlashCard = mFlashCards.get(--mFlashId);
+                updateUI();
             }
         });
 
         mSwitchKnown = (Switch) v.findViewById(R.id.switchKnown);
         mSwitchKnown.setChecked(mFlashCard.isKnown());
-        mSwitchKnown.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mFlashCard.setKnown(mSwitchKnown.isChecked());
-            }
-        });
+        mSwitchKnown.setOnClickListener(v4 ->
+                mFlashCard.setKnown(mSwitchKnown.isChecked()));
 
         mProgressBar = (ProgressBar) v.findViewById(R.id.progressBar);
         mProgressBar.setMax(mFlashCards.size() - 1);

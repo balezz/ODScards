@@ -26,7 +26,7 @@ import ru.balezz.odsquiz.R;
 import ru.balezz.odsquiz.models.AnswerType;
 import ru.balezz.odsquiz.models.Quest;
 import ru.balezz.odsquiz.models.QuestSession;
-import ru.balezz.odsquiz.utils.QuestsFetchr;
+import ru.balezz.odsquiz.utils.QuestsLab;
 
 public class QuestFragment extends Fragment {
     private static final String TAG = "QuestFragment";
@@ -52,7 +52,7 @@ public class QuestFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // todo move to background task
-        mQuests = new QuestsFetchr(getActivity()).fetchItems();
+        mQuests = QuestsLab.getInstance(getActivity()).getQuests();
         mQuestSession = QuestSession.getInstance(mQuests);
         mQuestId = mQuestSession.getCurrentId();
         mQuest = mQuests.get(mQuestId);
