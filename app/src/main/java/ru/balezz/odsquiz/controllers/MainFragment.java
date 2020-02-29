@@ -53,30 +53,21 @@ public class MainFragment extends Fragment {
         updateStatistics();
 
         mLectureImageView = (ImageView) v.findViewById(R.id.iv_lectures);
-        mLectureImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), LectureListActivity.class);
-                startActivity(i);
-            }
+        mLectureImageView.setOnClickListener(v1 -> {
+            Intent i = new Intent(getActivity(), LectureListActivity.class);
+            startActivity(i);
         });
 
         mFlashCardImageView = (ImageView) v.findViewById(R.id.iv_flashcards);
-        mFlashCardImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), FlashCardActivity.class);
-                startActivity(i);
-            }
+        mFlashCardImageView.setOnClickListener(v2 -> {
+            Intent i = new Intent(getActivity(), FlashCardActivity.class);
+            startActivity(i);
         });
 
         mQuestImageView = (ImageView) v.findViewById(R.id.iv_quest);
-        mQuestImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getActivity(), QuestActivity.class);
-                startActivity(i);
-            }
+        mQuestImageView.setOnClickListener(v3 -> {
+            Intent i = new Intent(getActivity(), QuestActivity.class);
+            startActivity(i);
         });
 
         return v;
