@@ -21,5 +21,6 @@
     <string name="quest_statistic">Статистика: </string>
     <string name="zero">0</string>
     <string name="slash">/</string>
+    <string name="clear_session">Очистить сессию</string>
 
 </resources>

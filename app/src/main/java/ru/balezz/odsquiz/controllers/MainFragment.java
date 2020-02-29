@@ -1,11 +1,12 @@
 package ru.balezz.odsquiz.controllers;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import ru.balezz.odsquiz.FlashCardActivity;
@@ -40,13 +42,24 @@ public class MainFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        mQuestSession = QuestSession.getInstance(getActivity());
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_main, container, false);
+
+        Toolbar toolbar = v.findViewById(R.id.app_toolbar);
+        Log.d(TAG, "onCreateView: " + toolbar);
+        toolbar.inflateMenu(R.menu.main_menu);
+        toolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.clear_session) {
+                QuestSession.clearSession(getActivity());
+                updateStatistics();
+            }
+            return true;
+        } );
+
         mTextTotal = v.findViewById(R.id.text_total);
         mTextRight = v.findViewById(R.id.text_right);
         mTextWrong = v.findViewById(R.id.text_wrong);
@@ -80,6 +93,7 @@ public class MainFragment extends Fragment {
     }
 
     private void updateStatistics() {
+        mQuestSession = QuestSession.getInstance(getActivity());
         right = mQuestSession.getRightCount();
         wrong = mQuestSession.getWrongCount();
         total = mQuestSession.getTotalLength();

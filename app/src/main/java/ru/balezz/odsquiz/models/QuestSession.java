@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -45,6 +46,11 @@ public class QuestSession implements Serializable {
         for (int i = 0; i < totalLength; i++) {
             mUserChecks.add(new BitSet());
         }
+    }
+
+    public static void clearSession(Activity activity) {
+        ourInstance = null;
+        activity.deleteFile(SESSION_BACKUP);
     }
 
     public int getCurrentId() {

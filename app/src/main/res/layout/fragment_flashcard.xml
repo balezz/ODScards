@@ -5,18 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/app_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="#00D1CDCD"
-            app:navigationIcon="@mipmap/ic_round"
-            app:title="@string/app_name" />
-    </com.google.android.material.appbar.AppBarLayout>
+    <include layout="@layout/toolbar"/>
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:id="@+id/flashcard_container"
@@ -44,7 +33,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:cardBackgroundColor="@color/light_card_background"
+        app:cardBackgroundColor="@color/card_background"
         app:cardCornerRadius="4dp">
 
         <TextView

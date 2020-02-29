@@ -6,18 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".controllers.MainFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/app_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="#00D1CDCD"
-            app:navigationIcon="@mipmap/ic_round"
-            app:title="@string/app_name" />
-    </com.google.android.material.appbar.AppBarLayout>
+    <include layout="@layout/toolbar"/>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -42,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:background="@color/light_card_background"
+                android:background="@color/card_background"
                 android:orientation="vertical"
                 android:padding="8dp">
 
@@ -102,7 +91,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="360dp"
-                android:background="@color/light_card_background">
+                android:background="@color/card_background">
 
                 <ImageView
                     android:id="@+id/iv_lectures"
@@ -205,14 +194,14 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
-                android:background="@color/light_card_background"
+                android:background="@color/card_background"
                 app:cardCornerRadius="4dp">
 
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/light_card_background"
+                    android:background="@color/card_background"
                     android:gravity="center"
                     android:padding="2dp"
                     android:text="@string/details"
