@@ -23,7 +23,7 @@ public interface AssetsLoader {
             }
             br.close();
         } catch (IOException ioe) {
-            Log.e(TAG, "loadQuestsFromAssets: ", ioe);
+            Log.e(TAG, "loadQuestsFromAssets FAILED. ", ioe);
         }
         return sb.toString();
     }

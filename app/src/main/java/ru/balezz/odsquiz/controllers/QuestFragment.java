@@ -1,5 +1,7 @@
 package ru.balezz.odsquiz.controllers;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -15,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,8 +56,11 @@ public class QuestFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // todo move to background task
         mQuests = QuestsLab.getInstance(getActivity()).getQuests();
-        mQuestSession = QuestSession.getInstance(mQuests);
+        mQuestSession = QuestSession.getInstance(getActivity());
+        mQuestSession.setQuests(mQuests);
         mQuestId = mQuestSession.getCurrentId();
+        Log.d(TAG, "onCreate: mQuestId" + mQuestId);
+        mQuestSession.setCurrentId(mQuestId);
         mQuest = mQuests.get(mQuestId);
     }
 
@@ -97,6 +103,12 @@ public class QuestFragment extends Fragment {
         updateUI();
 
         return v;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        QuestSession.saveSession(getActivity());
     }
 
     private void updateStatistic(boolean checkAnswerIsRight) {
@@ -165,7 +177,7 @@ public class QuestFragment extends Fragment {
         return radioGroup;
     }
 
-    /** Generate one line horizontal LinearLayout
+/** Generate one line horizontal LinearLayout
      *  with CheckBox and question text */
     private LinearLayout getCheckView(final int index) {
         LinearLayout choiceLayout = new LinearLayout(getActivity());
@@ -192,8 +204,10 @@ public class QuestFragment extends Fragment {
         String questCountString = getString(R.string.quest_counter,
                 mQuestId+1, mQuests.size());
         mQuestCounterView.setText(questCountString);
-        mRightCountView.setText(mQuestSession.getRightCount());
-        mWrongCountView.setText(mQuestSession.getWrongCount());
+        mRightCountView.setText(String.valueOf(
+                mQuestSession.getRightCount()));
+        mWrongCountView.setText(String.valueOf(
+                mQuestSession.getWrongCount()));
 
     }
 }

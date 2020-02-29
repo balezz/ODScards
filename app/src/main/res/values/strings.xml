@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">ODS Quiz</string>
     <string name="my_progress">Сухая статистика</string>
-    <string name="total">Вопросов: 25</string>
-    <string name="right">Правильно: 15</string>
-    <string name="wrong">Неправильно: 10</string>
+    <string name="total">Вопросов: %d</string>
+    <string name="right">Правильно: %d</string>
+    <string name="wrong">Неправильно: %d</string>
     <string name="details">Инструкция по применению</string>
     <string name="item_title_1">Лекции</string>
     <string name="item_title_2">Флеш карты</string>
