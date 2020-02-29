@@ -199,6 +199,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:minHeight="64dp"
+                    android:id="@+id/instruction_text"
                     android:background="@color/card_background"
                     android:gravity="center"
                     android:padding="2dp"

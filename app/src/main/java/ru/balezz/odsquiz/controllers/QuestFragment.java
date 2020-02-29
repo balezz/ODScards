@@ -51,7 +51,6 @@ public class QuestFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // todo move to background task
         mQuestSession = QuestSession.getInstance(getActivity());
         mQuests = QuestsLab.getInstance(getActivity()).getQuests();
         mQuestId = mQuestSession.getCurrentId();

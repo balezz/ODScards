@@ -31,15 +31,10 @@ public class MainFragment extends Fragment implements FragmentManager.OnBackStac
     ImageView mFlashCardImageView;
     ImageView mQuestImageView;
     ImageView mExamImageView;
+    TextView mIntstructionTextView;
 
     public static MainFragment getInstance() {
         return new MainFragment();
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
     }
 
     @Nullable
@@ -83,6 +78,9 @@ public class MainFragment extends Fragment implements FragmentManager.OnBackStac
                     Toast.LENGTH_LONG).show();
         });
 
+        mIntstructionTextView = (TextView) v.findViewById(R.id.instruction_text);
+        mIntstructionTextView.setOnClickListener(v1 ->
+                transactFragment(InstructionFragment.newInstance()));
         return v;
     }
 

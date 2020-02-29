@@ -7,7 +7,8 @@ import java.util.List;
 
 import ru.balezz.odsquiz.models.Lecture;
 
-/** Now it`s just have stub array. todo persist lectures in database*/
+/** Ugly stub
+ *  todo persist lectures in local cache or database*/
 public class LectureLab {
     static LectureLab mLectureLab;
     List<Lecture> mLectures;
