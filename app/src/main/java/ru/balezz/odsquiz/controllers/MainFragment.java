@@ -1,12 +1,8 @@
 package ru.balezz.odsquiz.controllers;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -18,14 +14,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
-import ru.balezz.odsquiz.FlashCardActivity;
-import ru.balezz.odsquiz.LectureListActivity;
-import ru.balezz.odsquiz.QuestActivity;
 import ru.balezz.odsquiz.R;
-import ru.balezz.odsquiz.models.QuestSession;
+import ru.balezz.odsquiz.utils.QuestSession;
 
-public class MainFragment extends Fragment {
+public class MainFragment extends Fragment implements FragmentManager.OnBackStackChangedListener {
     public static final String TAG = "MainFragment";
     QuestSession mQuestSession;
     FragmentManager mFragManager;
@@ -69,29 +63,24 @@ public class MainFragment extends Fragment {
         mTextWrong = v.findViewById(R.id.text_wrong);
         updateStatistics();
 
+        mFragManager = getActivity().getSupportFragmentManager();
         mLectureImageView = (ImageView) v.findViewById(R.id.iv_lectures);
-        mLectureImageView.setOnClickListener(v1 -> {
-/*            Intent i = new Intent(getActivity(), LectureListActivity.class);
-            startActivity(i);*/
-
-        });
+        mLectureImageView.setOnClickListener(v1 ->
+                transactFragment(LectureListFragment.newInstance())
+        );
 
         mFlashCardImageView = (ImageView) v.findViewById(R.id.iv_flashcards);
-        mFlashCardImageView.setOnClickListener(v2 -> {
-            Intent i = new Intent(getActivity(), FlashCardActivity.class);
-            startActivity(i);
-        });
+        mFlashCardImageView.setOnClickListener(v2 ->
+                transactFragment(FlashCardFragment.newInstance()));
 
         mQuestImageView = (ImageView) v.findViewById(R.id.iv_quest);
-        mQuestImageView.setOnClickListener(v3 -> {
-            Intent i = new Intent(getActivity(), QuestActivity.class);
-            startActivity(i);
-        });
+        mQuestImageView.setOnClickListener(v3 ->
+                transactFragment(QuestFragment.newInstance()));
 
         mExamImageView = (ImageView) v.findViewById(R.id.iv_exam);
         mExamImageView.setOnClickListener(v4 -> {
-            Toast.makeText(getContext(), R.string.exam_not_availible, Toast.LENGTH_LONG)
-            .show();
+            Toast.makeText(getContext(), R.string.exam_not_availible,
+                    Toast.LENGTH_LONG).show();
         });
 
         return v;
@@ -103,6 +92,11 @@ public class MainFragment extends Fragment {
         updateStatistics();
     }
 
+    @Override
+    public void onBackStackChanged() {
+
+    }
+
     private void updateStatistics() {
         mQuestSession = QuestSession.getInstance(getActivity());
         right = mQuestSession.getRightCount();
@@ -112,5 +106,16 @@ public class MainFragment extends Fragment {
         mTextRight.setText(getString(R.string.right, right));
         mTextWrong.setText(getString(R.string.wrong, wrong));
 
+    }
+
+    private void transactFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = mFragManager.beginTransaction();
+        fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left,
+                android.R.anim.slide_out_right);
+        mFragManager.addOnBackStackChangedListener(this);
+        fragmentTransaction.replace(R.id.fragment_container,
+                fragment, "h");
+        fragmentTransaction.addToBackStack("h");
+        fragmentTransaction.commit();
     }
 }

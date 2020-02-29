@@ -1,9 +1,11 @@
-package ru.balezz.odsquiz.models;
+package ru.balezz.odsquiz.utils;
 
 import android.net.Uri;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import ru.balezz.odsquiz.models.Lecture;
 
 /** Now it`s just have stub array. todo persist lectures in database*/
 public class LectureLab {

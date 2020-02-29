@@ -1,10 +1,9 @@
-package ru.balezz.odsquiz.models;
+package ru.balezz.odsquiz.utils;
 
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,8 +13,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
-
-import ru.balezz.odsquiz.utils.QuestsLab;
 
 public class QuestSession implements Serializable {
     private transient static final String SESSION_BACKUP = "QuestSession.save";

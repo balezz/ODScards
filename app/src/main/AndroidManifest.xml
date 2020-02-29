@@ -18,10 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="ru.balezz.odsquiz.LectureListActivity" />
         <activity android:name="ru.balezz.odsquiz.LecturePageActivity" />
-        <activity android:name="ru.balezz.odsquiz.FlashCardActivity"/>
-        <activity android:name="ru.balezz.odsquiz.QuestActivity"/>
     </application>
 
 </manifest>

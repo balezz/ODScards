@@ -2,15 +2,12 @@ package ru.balezz.odsquiz.models;
 
 import android.net.Uri;
 
-enum Course{ MLCourse, DLCourse}
-
 public class Lecture {
-    private Course mCourse;
     private String mTitle;
     private Uri mUri;
     private String mIconPath;
 
-    Lecture(String title) {
+    public Lecture(String title) {
         mTitle = title;
     }
 

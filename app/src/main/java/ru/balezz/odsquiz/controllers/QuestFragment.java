@@ -1,6 +1,5 @@
 package ru.balezz.odsquiz.controllers;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -26,7 +25,7 @@ import java.util.List;
 import ru.balezz.odsquiz.R;
 import ru.balezz.odsquiz.models.AnswerType;
 import ru.balezz.odsquiz.models.Quest;
-import ru.balezz.odsquiz.models.QuestSession;
+import ru.balezz.odsquiz.utils.QuestSession;
 import ru.balezz.odsquiz.utils.QuestsLab;
 
 public class QuestFragment extends Fragment {

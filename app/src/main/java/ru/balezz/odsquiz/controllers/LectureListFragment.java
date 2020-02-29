@@ -24,7 +24,7 @@ import java.util.List;
 import ru.balezz.odsquiz.LecturePageActivity;
 import ru.balezz.odsquiz.R;
 import ru.balezz.odsquiz.models.Lecture;
-import ru.balezz.odsquiz.models.LectureLab;
+import ru.balezz.odsquiz.utils.LectureLab;
 
 
 public class LectureListFragment extends Fragment {
