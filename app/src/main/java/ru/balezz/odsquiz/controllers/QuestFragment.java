@@ -1,7 +1,6 @@
 package ru.balezz.odsquiz.controllers;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
@@ -17,7 +16,6 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -55,9 +53,8 @@ public class QuestFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // todo move to background task
-        mQuests = QuestsLab.getInstance(getActivity()).getQuests();
         mQuestSession = QuestSession.getInstance(getActivity());
-        mQuestSession.setQuests(mQuests);
+        mQuests = QuestsLab.getInstance(getActivity()).getQuests();
         mQuestId = mQuestSession.getCurrentId();
         Log.d(TAG, "onCreate: mQuestId" + mQuestId);
         mQuestSession.setCurrentId(mQuestId);
@@ -83,8 +80,9 @@ public class QuestFragment extends Fragment {
         mForwardButton.setOnClickListener(v1 -> {
             if (!mQuestSession.isQuestAnswered(mQuestId)){
                 mQuestLayout.addView(getExplanationView());
+                updateStatistic(checkAnswerIsRight());
                 mQuestSession.setQuestIsAnswered(mQuestId);
-                updateStatistic(mQuestSession.checkAnswerIsRight(mQuestId));
+                updateUI();
                 return;
             }
             if (mQuestId < mQuests.size() - 1) {
@@ -101,8 +99,12 @@ public class QuestFragment extends Fragment {
             }
         });
         updateUI();
-
         return v;
+    }
+
+    private boolean checkAnswerIsRight() {
+        return mQuestSession.getUserChecksBitset(mQuestId)
+                .equals(mQuest.getRightAnswers());
     }
 
     @Override
@@ -121,6 +123,7 @@ public class QuestFragment extends Fragment {
     }
 
     private void updateUI() {
+        Log.d(TAG, "updateUI: quest is answered: " + mQuestSession.isQuestAnswered(mQuestId));
         mProgressBar.setProgress(mQuestId);
         updateStatisticViews();
         mQuestLayout.removeAllViews();
@@ -183,21 +186,34 @@ public class QuestFragment extends Fragment {
         LinearLayout choiceLayout = new LinearLayout(getActivity());
         choiceLayout.setOrientation(LinearLayout.HORIZONTAL);
         choiceLayout.setPadding(0, 8, 0, 8);
+
         final CheckBox checkBox = new CheckBox(getActivity());
-        checkBox.setChecked(mQuestSession.getUserCheck(mQuestId, index));
+        checkBox.setChecked(mQuestSession.isUserCheckChoice(mQuestId, index));
         checkBox.setOnCheckedChangeListener(
                 (buttonView, isChecked) -> mQuestSession.toggleUserCheck(mQuestId, index));
         choiceLayout.addView(checkBox);
+
         TextView textAnswer = new TextView(
                 new ContextThemeWrapper(getActivity(), R.style.QuestText),
                 null, 0);
         textAnswer.setPadding(0, 8, 0, 8);
+        setColor(textAnswer, index);
+
         String choiceString = mQuest.getChoices().get(index);
-        Log.d(TAG, "getCheckView: " + choiceString);
         textAnswer.setText(choiceString);
         choiceLayout.addView(textAnswer);
         choiceLayout.setOnClickListener(v -> checkBox.toggle());
         return choiceLayout;
+    }
+
+    private void setColor(TextView textAnswer, int choiceId) {
+        if (mQuestSession.isQuestAnswered(mQuestId)) {
+            if (mQuestSession.isUserCheckChoice(mQuestId, choiceId))
+                textAnswer.setTextColor(Color.RED);
+            if (mQuest.getRightAnswers().get(choiceId))
+                textAnswer.setTextColor(Color.GREEN);
+        }
+
     }
 
     private void updateStatisticViews() {

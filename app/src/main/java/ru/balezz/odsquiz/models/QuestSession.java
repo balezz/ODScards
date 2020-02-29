@@ -14,11 +14,12 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
+import ru.balezz.odsquiz.utils.QuestsLab;
+
 public class QuestSession implements Serializable {
     private transient static final String SESSION_BACKUP = "QuestSession.save";
     private transient static final String TAG = "QuestSession";
     private transient static QuestSession ourInstance;
-    private transient List<Quest> mQuests;
     private List<BitSet> mUserChecks;
     private boolean[] mQuestIsAnswered;
     private int mCurrentId;
@@ -27,22 +28,23 @@ public class QuestSession implements Serializable {
     private int mTotalLength;
 
     public static QuestSession getInstance(Activity activity) {
+        int totalLength = QuestsLab.getInstance(activity)
+                .getQuests().size();
         if (ourInstance == null) {
             if (!loadSession(activity)){
-                ourInstance = new QuestSession();
+                ourInstance = new QuestSession(totalLength);
             }
         }
         return ourInstance;
     }
 
-    public void setQuests(List<Quest> quests){
-        mQuests = quests;
-        mQuestIsAnswered = new boolean[quests.size()];
-        mUserChecks = new ArrayList<>(quests.size());
-        for (int i = 0; i < quests.size(); i++) {
+    public QuestSession(int totalLength) {
+        mTotalLength = totalLength;
+        mQuestIsAnswered = new boolean[totalLength];
+        mUserChecks = new ArrayList<>(totalLength);
+        for (int i = 0; i < totalLength; i++) {
             mUserChecks.add(new BitSet());
         }
-        mTotalLength = quests.size();
     }
 
     public int getCurrentId() {
@@ -53,8 +55,12 @@ public class QuestSession implements Serializable {
         mCurrentId = currentId;
     }
 
-    public boolean getUserCheck(int questId, int index) {
-        return mUserChecks.get(questId).get(index);
+    public boolean isUserCheckChoice(int questId, int choiceId) {
+        return mUserChecks.get(questId).get(choiceId);
+    }
+
+    public BitSet getUserChecksBitset(int questId) {
+        return mUserChecks.get(questId);
     }
 
     public void toggleUserCheck(int questId, int index) {
@@ -74,13 +80,6 @@ public class QuestSession implements Serializable {
 
     public boolean isQuestAnswered(int questId) {
         return mQuestIsAnswered[questId];
-    }
-
-    public boolean checkAnswerIsRight(int questId) {
-        BitSet rightAnswers = mQuests.get(questId).getRightAnswers();
-        Log.d(TAG, "checkAnswerIsRight: rightAnswers: " + rightAnswers.toString());
-        Log.d(TAG, "checkAnswerIsRight: checkedAnswers: " + mUserChecks.get(questId).toString());
-        return mUserChecks.get(questId).equals(rightAnswers);
     }
 
     public void incrementWrong() {

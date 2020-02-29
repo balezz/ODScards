@@ -43,7 +43,7 @@ public class Quest {
     }
 
     public int getChoiceCount() {
-        return mChoices.size() - 1;
+        return mChoices.size();
     }
 
     public void setChoices(List<String> choices) {
