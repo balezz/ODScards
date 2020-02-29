@@ -22,5 +22,6 @@
     <string name="zero">0</string>
     <string name="slash">/</string>
     <string name="clear_session">Очистить сессию</string>
+    <string name="exam_not_availible">Режим экзамена временно недоступен</string>
 
 </resources>

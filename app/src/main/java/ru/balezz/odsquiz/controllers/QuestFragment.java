@@ -209,9 +209,9 @@ public class QuestFragment extends Fragment {
     private void setColor(TextView textAnswer, int choiceId) {
         if (mQuestSession.isQuestAnswered(mQuestId)) {
             if (mQuestSession.isUserCheckChoice(mQuestId, choiceId))
-                textAnswer.setTextColor(Color.RED);
+                textAnswer.setTextColor(getResources().getColor(R.color.red));
             if (mQuest.getRightAnswers().get(choiceId))
-                textAnswer.setTextColor(Color.GREEN);
+                textAnswer.setTextColor(getResources().getColor(R.color.green));
         }
 
     }

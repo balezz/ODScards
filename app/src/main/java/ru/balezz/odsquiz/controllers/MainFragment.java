@@ -11,11 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import ru.balezz.odsquiz.FlashCardActivity;
 import ru.balezz.odsquiz.LectureListActivity;
@@ -26,6 +28,7 @@ import ru.balezz.odsquiz.models.QuestSession;
 public class MainFragment extends Fragment {
     public static final String TAG = "MainFragment";
     QuestSession mQuestSession;
+    FragmentManager mFragManager;
     private int total, right, wrong;
     TextView mTextTotal;
     TextView mTextRight;
@@ -33,6 +36,7 @@ public class MainFragment extends Fragment {
     ImageView mLectureImageView;
     ImageView mFlashCardImageView;
     ImageView mQuestImageView;
+    ImageView mExamImageView;
 
     public static MainFragment getInstance() {
         return new MainFragment();
@@ -41,7 +45,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
+
     }
 
     @Nullable
@@ -67,8 +71,9 @@ public class MainFragment extends Fragment {
 
         mLectureImageView = (ImageView) v.findViewById(R.id.iv_lectures);
         mLectureImageView.setOnClickListener(v1 -> {
-            Intent i = new Intent(getActivity(), LectureListActivity.class);
-            startActivity(i);
+/*            Intent i = new Intent(getActivity(), LectureListActivity.class);
+            startActivity(i);*/
+
         });
 
         mFlashCardImageView = (ImageView) v.findViewById(R.id.iv_flashcards);
@@ -81,6 +86,12 @@ public class MainFragment extends Fragment {
         mQuestImageView.setOnClickListener(v3 -> {
             Intent i = new Intent(getActivity(), QuestActivity.class);
             startActivity(i);
+        });
+
+        mExamImageView = (ImageView) v.findViewById(R.id.iv_exam);
+        mExamImageView.setOnClickListener(v4 -> {
+            Toast.makeText(getContext(), R.string.exam_not_availible, Toast.LENGTH_LONG)
+            .show();
         });
 
         return v;
