@@ -10,20 +10,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.balezz.odsquiz.models.FlashCard;
-import ru.balezz.odsquiz.models.Quest;
 
-public class FlashCardLab {
-    private static FlashCardLab ourInstance;
+public class FlashCardsLab {
+    private static FlashCardsLab ourInstance;
     List<FlashCard> mFlashCards;
 
-    public static FlashCardLab getInstance(Activity activity) {
+    public static FlashCardsLab getInstance(Activity activity) {
         if (ourInstance == null) {
-            ourInstance = new FlashCardLab(activity);
+            ourInstance = new FlashCardsLab(activity);
         }
         return ourInstance;
     }
 
-    private FlashCardLab(Activity activity) {
+    private FlashCardsLab(Activity activity) {
         mFlashCards = new ArrayList<>();
         fetchFlashCards(activity);
     }

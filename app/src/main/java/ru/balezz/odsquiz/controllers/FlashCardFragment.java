@@ -21,7 +21,7 @@ import java.util.List;
 
 import ru.balezz.odsquiz.R;
 import ru.balezz.odsquiz.models.FlashCard;
-import ru.balezz.odsquiz.utils.FlashCardLab;
+import ru.balezz.odsquiz.utils.FlashCardsLab;
 import ru.balezz.odsquiz.utils.Rotate3dAnimation;
 
 public class FlashCardFragment extends Fragment {
@@ -43,7 +43,7 @@ public class FlashCardFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mFlashCards = FlashCardLab.getInstance(getActivity()).getFlashCards();
+        mFlashCards = FlashCardsLab.getInstance(getActivity()).getFlashCards();
         mFlashCard = mFlashCards.get(mFlashId);
     }
 
