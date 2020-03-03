@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/about_text"
-        android:textSize="16sp"/>
+        android:textSize="18sp"/>
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
