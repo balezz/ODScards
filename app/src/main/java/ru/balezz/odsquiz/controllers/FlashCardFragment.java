@@ -1,6 +1,9 @@
 package ru.balezz.odsquiz.controllers;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.card.MaterialCardView;
@@ -25,9 +29,8 @@ import ru.balezz.odsquiz.utils.FlashCardsLab;
 import ru.balezz.odsquiz.utils.Rotate3dAnimation;
 
 public class FlashCardFragment extends Fragment {
-    public static FlashCardFragment newInstance() {
-        return new FlashCardFragment();
-    }
+    private static final String TAG = "FlashCardFragment";
+    private static final int READ_REQUEST_CODE = 21;
     MaterialCardView mCardView;
     TextView mCardText;
     ImageButton mForwardButton;
@@ -39,6 +42,10 @@ public class FlashCardFragment extends Fragment {
     FlashCard mFlashCard;
     int mFlashId = 0;
     boolean mCardFaceVisible = true;
+
+    public static FlashCardFragment newInstance() {
+        return new FlashCardFragment();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,6 +60,16 @@ public class FlashCardFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_flashcard, container, false);
+
+        Toolbar toolbar = v.findViewById(R.id.app_toolbar);
+        Log.d(TAG, "onCreateView: " + toolbar);
+        toolbar.inflateMenu(R.menu.flashcard_menu);
+        toolbar.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.download_flashcard) {
+                downloadFlashCard();
+            }
+            return true;
+        } );
 
         mCardView = (MaterialCardView) v.findViewById(R.id.card_face);
         mCardText = (TextView) v.findViewById(R.id.card_text);
@@ -87,6 +104,25 @@ public class FlashCardFragment extends Fragment {
         mProgressBar.setProgress(mFlashId);
 
         return v;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == READ_REQUEST_CODE) {
+            Uri uri = null;
+            if (data != null) {
+                uri = data.getData();
+                FlashCardsLab.getInstance(getActivity()).fetchFromUri(uri);
+            }
+        }
+    }
+
+    private void downloadFlashCard() {
+        Log.d(TAG, "downloadFlashCard: ");
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("text/plain");
+        startActivityForResult(intent, READ_REQUEST_CODE);
     }
 
     private void updateUI() {
