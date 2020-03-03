@@ -109,11 +109,16 @@ public class FlashCardFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == READ_REQUEST_CODE) {
-            Uri uri = null;
+            Uri uri;
             if (data != null) {
                 uri = data.getData();
                 FlashCardsLab.getInstance(getActivity()).fetchFromUri(uri);
             }
+            mFlashCards = FlashCardsLab.getInstance(getActivity()).getFlashCards();
+            mFlashId = 0;
+            mFlashCard = mFlashCards.get(mFlashId);
+            updateUI();
+            Log.d(TAG, "onActivityResult: UPDATED" + mFlashCards);
         }
     }
 

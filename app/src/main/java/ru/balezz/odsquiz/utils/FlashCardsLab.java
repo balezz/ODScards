@@ -59,6 +59,7 @@ public class FlashCardsLab {
         } catch (IOException ioe) {
             Log.e(TAG, "fetchFromUri: cant read file: " + uri);
         }
+        mFlashCards.clear();
         parseItems(mFlashCards, jsonString);
     }
 
