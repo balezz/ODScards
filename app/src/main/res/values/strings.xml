@@ -1,38 +1,39 @@
 <resources>
     <string name="app_name">ODS Quiz</string>
-    <string name="my_progress">Сухая статистика</string>
-    <string name="total">Вопросов: %d</string>
-    <string name="right">Правильно: %d</string>
-    <string name="wrong">Неправильно: %d</string>
-    <string name="details">Инструкция по применению</string>
-    <string name="item_title_1">Лекции</string>
-    <string name="item_title_2">Флеш карты</string>
-    <string name="item_title_3">Тренировка</string>
-    <string name="item_title_4">Экзамен</string>
-    <string name="lecture_stub">Лекция №1. Введение в Pandas</string>
-    <string name="i_know_it">Запомнил</string>
-    <string name="quest_example">Data science - наука о данных </string>
+    <string name="my_progress">Dry statistics</string>
+    <string name="total">Quests: %d</string>
+    <string name="right">Right: %d</string>
+    <string name="wrong">Wrong: %d</string>
+    <string name="details">Instructions for use</string>
+    <string name="item_title_1">Lectures</string>
+    <string name="item_title_2">Flash Cards</string>
+    <string name="item_title_3">Trainings</string>
+    <string name="item_title_4">Examine</string>
+    <string name="lecture_stub">Lecture №1. Intro to Pandas</string>
+    <string name="i_know_it">I know it</string>
+    <string name="quest_example">Data science is science about data </string>
     <string name="back">back</string>
     <string name="forward">forward</string>
-    <string name="answer_example">Верно, предмет науки - данные и методы их обработки</string>
-    <string name="rotate_face">Нажмите чтобы перевернуть карту</string>
-    <string name="rotate_back">Нажмите для просмотра вопроса</string>
-    <string name="quest_counter">Вопрос: %d/%d</string>
-    <string name="quest_statistic">Статистика: </string>
+    <string name="answer_example">Right, data science is about data processing methods</string>
+    <string name="rotate_face">Click to rotate</string>
+    <string name="rotate_back">Click to view question</string>
+    <string name="quest_counter">Question: %d/%d</string>
+    <string name="quest_statistic">Statistics: </string>
     <string name="zero">0</string>
     <string name="slash">/</string>
-    <string name="clear_session">Очистить сессию</string>
-    <string name="exam_not_availible">Режим экзамена временно недоступен</string>
-    <string name="about_title">Инструкция по применению</string>
-    <string name="about_text">QdsQuiz - викторина по основам машинного обучения от сообщества Open Data Science.\n
-В разделе \"Лекции\" собраны ссылки на статьи хабра с лекциями курса mlcourse.ai.\n
-В разделе \"Флэш карты\" можно найти карточки с вопросами для лучшего запоминания материала.\n
-Карточки хранятся в json формате, при желании можно создать свой набор и загрузить его в приложение.\n
-        ВАЖНО! Содержимое карточки - в формате json, а расширение файла должно быть *.txt.\n
-В разделе \"Тренировка\" можно поотвечать на вопросы, результаты будут видны на главном экране.\n
-Режим \"Экзамен\" пока не реализован.\n
-Исходники программы доступны на github, там можно выразить все свои пожелания и выявленные баги. </string>
-    <string name="download">Загрузить</string>
-    <string name="cant_parse_json">Не удалось распарсить json строку</string>
+    <string name="clear_session">Clear session</string>
+    <string name="exam_not_availible">Exam mode is temporary not available</string>
+    <string name="about_title">Instructions for use</string>
+    <string name="about_text">QdsQuiz - application for learning fundamentals of machine learning
+        from Open Data Science Community.\n
+In the \"Lecture\" section posted helpful links to mlcourse.ai lectures.\n
+In the \"Flash Cards\" section you will find cards with course materials.\n
+Cards persisted into JSON-format. You can create own set of Flash Cards and load into application.\n
+        NOTE! Flash Card content encoded in json format, but file extension must be *.txt.\n
+In the \"Training\" section you can answer to questions, your result will posted in the main screen.\n
+\"Examine\" mode is temporary not available while hosting problems are not solved.\n
+Sources are on https://github.com/balezz/OdsQuiz, feel free to post issues and pull requests.</string>
+    <string name="download">Download</string>
+    <string name="cant_parse_json">Can`t parse json string</string>
 
 </resources>

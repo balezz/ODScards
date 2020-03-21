@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">ODS Quiz</string>
+    <string name="my_progress">Сухая статистика</string>
+    <string name="total">Вопросов: %d</string>
+    <string name="right">Правильно: %d</string>
+    <string name="wrong">Неправильно: %d</string>
+    <string name="details">Инструкция по применению</string>
+    <string name="item_title_1">Лекции</string>
+    <string name="item_title_2">Флеш карты</string>
+    <string name="item_title_3">Тренировка</string>
+    <string name="item_title_4">Экзамен</string>
+    <string name="lecture_stub">Лекция №1. Введение в Pandas</string>
+    <string name="i_know_it">Запомнил</string>
+    <string name="quest_example">Data science - наука о данных </string>
+    <string name="back">back</string>
+    <string name="forward">forward</string>
+    <string name="answer_example">Верно, предмет науки - данные и методы их обработки</string>
+    <string name="rotate_face">Нажмите чтобы перевернуть карту</string>
+    <string name="rotate_back">Нажмите для просмотра вопроса</string>
+    <string name="quest_counter">Вопрос: %d/%d</string>
+    <string name="quest_statistic">Статистика: </string>
+    <string name="zero">0</string>
+    <string name="slash">/</string>
+    <string name="clear_session">Очистить сессию</string>
+    <string name="exam_not_availible">Режим экзамена временно недоступен</string>
+    <string name="about_title">Инструкция по применению</string>
+    <string name="about_text">QdsQuiz - викторина по основам машинного обучения от сообщества Open Data Science.\n
+В разделе \"Лекции\" собраны ссылки на статьи хабра с лекциями курса mlcourse.ai.\n
+В разделе \"Флэш карты\" можно найти карточки с вопросами для лучшего запоминания материала.\n
+Карточки хранятся в json формате, при желании можно создать свой набор и загрузить его в приложение.\n
+        ВАЖНО! Содержимое карточки - в формате json, а расширение файла должно быть *.txt.\n
+В разделе \"Тренировка\" можно поотвечать на вопросы, результаты будут видны на главном экране.\n
+Режим \"Экзамен\" пока не реализован.\n
+Исходники программы доступны на github, там можно выразить все свои пожелания и выявленные баги. </string>
+    <string name="download">Загрузить</string>
+    <string name="cant_parse_json">Не удалось распарсить json строку</string>
+
+</resources>
