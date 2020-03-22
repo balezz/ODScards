@@ -1,19 +1,19 @@
 {"FlashCards": [
 
  { "Id":"1",
-  "Face": "Целочисленные значения в pandas по умолчанию представляются типом int32",
-  "Back": "Неверно. По умолчанию используется int64."
+  "Face": "Default type of integer values in pandas is int32",
+  "Back": "Wrong. Default type is int64."
  },
 
 
  { "Id":"2",
-  "Face": "Метод describe показывает основные статистические характеристики данных по каждому числовому признаку (типы int64 и float64).",
-  "Back": "Верно. Число непропущенных значений, среднее, стандартное отклонение, диапазон, медиану, 0.25 и 0.75 квартили."
+  "Face": "pd.describe() method generate descriptive statistics for every number feature ( int64 and float64 types).",
+  "Back": "Right. Descriptive statistics include those that summarize the central tendency, dispersion and shape of a dataset’s distribution, excluding NaN values."
  },
 
  { "Id":"3",
-  "Face": "Оценка параметров модели по МНК является самой лучшей оценкой.",
-  "Back": "В общем случае неверно. Оценка по МНК является лучшей только при соблюдении условий теоремы Гаусса-Маркова."
+  "Face": "Ordinary least squares is the best estimation for linear regression.",
+  "Back": "Wrong in general. The Gauss–Markov theorem states that the OLS estimator has the lowest sampling variance within the class of linear unbiased estimators, if the errors in the linear regression model are uncorrelated, have equal variances and expectation value of zero."
  },
 
  { "Id":"4",
